@@ -11,8 +11,6 @@
 
 // test if links should display
 
-	//Title of the box (Should be moved to a language file if multi_language site...
-	define('BOX_HEADING_SITE_LINKS','Partners');
 	//Syntax:
 	//add_site_link(DISPLAYED NAME OF THE SITE , URL OF THE SITE);
     add_site_link('Example Shop -- Edit site_links.php...','http://www.example.com');
