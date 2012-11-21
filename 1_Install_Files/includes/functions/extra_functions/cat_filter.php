@@ -102,7 +102,7 @@ function cat_filter($sql) { // only allow selected products/categories
     }
   }
   if($sql==$sql2) {
-    $fh = fopen(DIR_FS_SQL_CACHE.'/multisite_logs.txt','a');
+    $fh = fopen(DIR_FS_LOGS.'/multisite_logs.txt','a');
     fwrite($fh, "Query not changed:\n".$sql2."\n\n");
     fclose($fh);
   }
