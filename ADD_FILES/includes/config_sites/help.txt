@@ -1,0 +1,4 @@
+
+
+Create a file [DOMAIN]_config.php for each domain name that you want to add.
+Use this file in order to override the configuration that is specific to this shop.
