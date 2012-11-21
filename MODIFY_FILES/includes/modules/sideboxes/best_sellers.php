@@ -31,7 +31,7 @@
 
   if ($show_best_sellers == true) {
     $limit = (trim(MAX_DISPLAY_BESTSELLERS) == "") ? "" : " LIMIT " . (int)MAX_DISPLAY_BESTSELLERS;
-  	if (isset($current_category_id) && ($current_category_id > 0)) {
+    if (isset($current_category_id) && ($current_category_id > 0)) {
       $best_sellers_query = "select distinct p.products_id, pd.products_name, p.products_ordered
                              from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, "
                                     . TABLE_PRODUCTS_TO_CATEGORIES . " p2c, " . TABLE_CATEGORIES . " c

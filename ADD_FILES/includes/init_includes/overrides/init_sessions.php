@@ -55,10 +55,10 @@ if (isset($_POST[zen_session_name()])) {
 }
 //Multi-Sites - Prioritise the GET variable over the cookie.
 elseif(isset($_GET[session_name()])) {
-	zen_setcookie(session_name(), $_GET[session_name()], time()+$SESS_LIFE, '/', (zen_not_null($current_domain) ? $current_domain : ''));
-	if(isset($_COOKIE[session_name()])&&($_COOKIE[session_name()]!=$_GET[session_name()])) {
-		$_COOKIE[session_name()] = $_GET[session_name()];
-	}
+  zen_setcookie(session_name(), $_GET[session_name()], time()+$SESS_LIFE, '/', (zen_not_null($current_domain) ? $current_domain : ''));
+  if(isset($_COOKIE[session_name()])&&($_COOKIE[session_name()]!=$_GET[session_name()])) {
+    $_COOKIE[session_name()] = $_GET[session_name()];
+  }
 }
 //end Multi-Sites
 /**

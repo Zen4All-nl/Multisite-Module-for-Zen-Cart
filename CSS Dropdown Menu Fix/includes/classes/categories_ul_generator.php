@@ -38,7 +38,7 @@ class zen_categories_ul_generator {
     $child_end_string = '</li>',
     
     $spacer_string = '
-	',
+  ',
     $spacer_multiplier = 1;
     
     var $document_types_list = ' (3) ';// acceptable format example: ' (3, 4, 9, 22, 18) '
@@ -68,12 +68,12 @@ and c.categories_status=1 " .
         if (($this->data[$parent_id])) {
             foreach($this->data[$parent_id] as $category_id => $category) {
                  $category_link = $parent_link . $category_id; 
-				
-				if (($this->data[$category_id])) {
-				$result .= sprintf($this->child_start_string, ($submenu==true) ? ' class="submenu"' : '');
-				} 
-				
-				else {
+        
+        if (($this->data[$category_id])) {
+        $result .= sprintf($this->child_start_string, ($submenu==true) ? ' class="submenu"' : '');
+        } 
+        
+        else {
                      if (($this->data[$category_id]) && ($submenu==false)) {
                           $result .= sprintf($this->parent_group_start_string, ($submenu==true) ? ' class="level'. ($level+1) . '"' : '');
                           $result .= sprintf($this->child_start_string, ($submenu==true) ? ' class="submenu"' : '');
@@ -81,8 +81,8 @@ and c.categories_status=1 " .
                             } else {
                               $result .= sprintf($this->child_start_string, '');
                             }
-							
-						}
+              
+            }
                 
                 if ($level == 0) {
                     $result .= $this->root_start_string;

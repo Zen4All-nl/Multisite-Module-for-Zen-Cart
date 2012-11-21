@@ -35,7 +35,7 @@
   $orders_sites = array();
   $orders_site_array = array();
   $orders_site = $db->Execute("SELECT order_site
-  								 FROM " . TABLE_ORDERS . "
+                   FROM " . TABLE_ORDERS . "
                                  WHERE order_site <>  ''
                                  GROUP BY order_site",false,true);
     while (!$orders_site->EOF) {
@@ -818,7 +818,7 @@ function couponpopupWindow(url) {
     //Multi-site: add site_name
     $new_fields .= ", o.order_site ";
     if(isset($_GET['site'])&&($_GET['site']!='')){
-    	$search .= " and order_site='".zen_db_prepare_input($_GET['site'])."'";
+      $search .= " and order_site='".zen_db_prepare_input($_GET['site'])."'";
     }
     //end Multi-site
     if (isset($_GET['cID'])) {

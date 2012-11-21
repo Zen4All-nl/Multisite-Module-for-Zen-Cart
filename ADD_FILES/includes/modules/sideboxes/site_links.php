@@ -11,8 +11,8 @@
 
 // test if links should display
 
-	//Syntax:
-	//add_site_link(DISPLAYED NAME OF THE SITE , URL OF THE SITE);
+  //Syntax:
+  //add_site_link(DISPLAYED NAME OF THE SITE , URL OF THE SITE);
     add_site_link('Example Shop -- Edit site_links.php...','http://www.example.com');
 
 // only show if links are active
@@ -25,20 +25,20 @@
   }
   
   function add_site_link($site_name,$url='',$session=true) {
-	global $default_server_name, $site_links;
-	if(($site_name!=$default_server_name)&&("http://$default_server_name"!=$url)) {
-		if($url=='') {
-			$url = "http://$site_name";
-		}
-		if($session && zen_not_null(zen_session_id())) {
-			if(strpos($url,'?')===false) {
-				$separator = '?';
-			} else {
-				$separator = '&';
-			}
-			$url .= $separator . zen_session_name() . '=' . zen_session_id();
-		}
-		$site_links[] = '<a href="'.$url.'">'.$site_name.'</a>';
-	}
+  global $default_server_name, $site_links;
+  if(($site_name!=$default_server_name)&&("http://$default_server_name"!=$url)) {
+    if($url=='') {
+      $url = "http://$site_name";
+    }
+    if($session && zen_not_null(zen_session_id())) {
+      if(strpos($url,'?')===false) {
+        $separator = '?';
+      } else {
+        $separator = '&';
+      }
+      $url .= $separator . zen_session_name() . '=' . zen_session_id();
+    }
+    $site_links[] = '<a href="'.$url.'">'.$site_name.'</a>';
+  }
   }
 ?>
