@@ -3,10 +3,10 @@
  * functions_categories.php
  *
  * @package functions
- * @copyright Copyright 2003-2007 Zen Cart Development Team
+ * @copyright Copyright 2003-2009 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: functions_categories.php 4135 2006-08-14 04:25:02Z drbyte $
+ * @version $Id: functions_categories.php 14141 2009-08-10 19:34:47Z wilt $
  */
 
 ////
@@ -279,7 +279,7 @@
       $parent_categories = $db->Execute($parent_categories_query);
 
       while (!$parent_categories->EOF) {
-        if ($parent_categories->fields['parent_id'] !=0 && !$incat) {
+        if ($parent_categories->fields['parent_id'] !=0 && !$in_cat) {
           $in_cat = zen_product_in_parent_category($product_id, $cat_id, $parent_categories->fields['parent_id']);
         }
         $parent_categories->MoveNext();
@@ -468,7 +468,7 @@
     $lookup_query = "select parent_id from " . TABLE_CATEGORIES . " where categories_id='" . (int)$categories_id . "'";
     $lookup = $db->Execute($lookup_query);
 
-    $lookup_query = "select categories_name from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id='" . (int)$lookup->fields['parent_id'] . "'";
+    $lookup_query = "select categories_name from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id='" . (int)$lookup->fields['parent_id'] . "' and language_id= " . $_SESSION['languages_id'];
     $lookup = $db->Execute($lookup_query);
 
     return $lookup->fields['categories_name'];

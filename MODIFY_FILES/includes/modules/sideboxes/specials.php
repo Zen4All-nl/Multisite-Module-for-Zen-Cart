@@ -3,10 +3,10 @@
  * specials sidebox - displays a random product "on special"
  *
  * @package templateSystem
- * @copyright Copyright 2003-2005 Zen Cart Development Team
+ * @copyright Copyright 2003-2007 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: specials.php 2718 2005-12-28 06:42:39Z drbyte $
+ * @version $Id: specials.php 6475 2007-06-08 21:10:33Z ajeh $
  */
 
 // test if box should display

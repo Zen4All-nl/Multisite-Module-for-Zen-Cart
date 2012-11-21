@@ -3,10 +3,10 @@
  * Header code file for the Advanced Search Results page
  *
  * @package page
- * @copyright Copyright 2003-2007 Zen Cart Development Team
+ * @copyright Copyright 2003-2011 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: header_php.php 7160 2007-10-02 08:46:34Z drbyte $
+ * @version $Id: header_php.php 19702 2011-10-05 20:33:06Z wilt $
  */
 
 // This should be first line of the script:
@@ -102,7 +102,7 @@ if ( (isset($_GET['keyword']) && (empty($_GET['keyword']) || $_GET['keyword']==H
   }
 
   if (($price_check_error == false) && is_float($pfrom) && is_float($pto)) {
-    if ($pfrom >= $pto) {
+    if ($pfrom > $pto) {
       $error = true;
 
       $messageStack->add_session('search', ERROR_PRICE_TO_LESS_THAN_PRICE_FROM);
@@ -110,7 +110,7 @@ if ( (isset($_GET['keyword']) && (empty($_GET['keyword']) || $_GET['keyword']==H
   }
 
   if (zen_not_null($keywords)) {
-    if (!zen_parse_search_string($keywords, $search_keywords)) {
+    if (!zen_parse_search_string(stripslashes($keywords), $search_keywords)) {
       $error = true;
 
       $messageStack->add_session('search', ERROR_INVALID_KEYWORDS);
@@ -257,6 +257,7 @@ if (!isset($_GET['inc_subcat'])) {
 if (!isset($_GET['search_in_description'])) {
   $_GET['search_in_description'] = '0';
 }
+$_GET['search_in_description'] = (int)$_GET['search_in_description'];
 
 if (isset($_GET['categories_id']) && zen_not_null($_GET['categories_id'])) {
   if ($_GET['inc_subcat'] == '1') {
@@ -268,9 +269,14 @@ if (isset($_GET['categories_id']) && zen_not_null($_GET['categories_id'])) {
 
     $where_str = $db->bindVars($where_str, ':categoriesID', $_GET['categories_id'], 'integer');
 
-    for ($i=0, $n=sizeof($subcategories_array); $i<$n; $i++ ) {
-      $where_str .= " OR p2c.categories_id = :categoriesID";
-      $where_str = $db->bindVars($where_str, ':categoriesID', $subcategories_array[$i], 'integer');
+    if (sizeof($subcategories_array) > 0) {
+      $where_str .= " OR p2c.categories_id in (";
+      for ($i=0, $n=sizeof($subcategories_array); $i<$n; $i++ ) {
+        $where_str .= " OR p2c.categories_id = :categoriesID";
+        if ($i+1 < $n) $where_str .= ",";
+        $where_str = $db->bindVars($where_str, ':categoriesID', $subcategories_array[$i], 'integer');
+      }
+      $where_str .= ")";
     }
     $where_str .= ")";
   } else {
@@ -396,7 +402,7 @@ if (!isset($_GET['sort']) and PRODUCT_LISTING_DEFAULT_SORT_ORDER != '') {
   $_GET['sort'] = PRODUCT_LISTING_DEFAULT_SORT_ORDER;
 }
 //die('I SEE ' . $_GET['sort'] . ' - ' . PRODUCT_LISTING_DEFAULT_SORT_ORDER);
-if ((!isset($_GET['sort'])) || (!ereg('[1-8][ad]', $_GET['sort'])) || (substr($_GET['sort'], 0 , 1) > sizeof($column_list))) {
+if ((!isset($_GET['sort'])) || (!preg_match('/[1-8][ad]/', $_GET['sort'])) || (substr($_GET['sort'], 0 , 1) > sizeof($column_list))) {
   for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
     if ($column_list[$col] == 'PRODUCT_LIST_NAME') {
       $_GET['sort'] = $col+1 . 'a';
@@ -443,6 +449,8 @@ if ((!isset($_GET['sort'])) || (!ereg('[1-8][ad]', $_GET['sort'])) || (substr($_
     break;
   }
 }
+//$_GET['keyword'] = zen_output_string_protected($_GET['keyword']);
+
 $listing_sql = cat_filter($select_str . $from_str . $where_str . $order_str);
 // Notifier Point
 $zco_notifier->notify('NOTIFY_SEARCH_ORDERBY_STRING', $listing_sql);
@@ -455,8 +463,6 @@ if ($result->number_of_rows == 0) {
   $messageStack->add_session('search', TEXT_NO_PRODUCTS, 'caution');
   zen_redirect(zen_href_link(FILENAME_ADVANCED_SEARCH, zen_get_all_get_params('action')));
 }
-
-
 // This should be last line of the script:
 $zco_notifier->notify('NOTIFY_HEADER_END_ADVANCED_SEARCH_RESULTS', $keywords);
 //EOF

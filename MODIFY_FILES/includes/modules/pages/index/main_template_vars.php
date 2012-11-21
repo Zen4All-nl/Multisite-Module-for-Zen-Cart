@@ -3,10 +3,10 @@
  * index main_template_vars.php
  *
  * @package page
- * @copyright Copyright 2003-2006 Zen Cart Development Team
+ * @copyright Copyright 2003-2011 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: main_template_vars.php 4958 2006-11-19 04:45:57Z drbyte $
+ * @version $Id: main_template_vars.php 18695 2011-05-04 05:24:19Z drbyte $
  */
 
 // This should be first line of the script:
@@ -68,8 +68,8 @@ if ($category_depth == 'nested')
           AND        cd.language_id = :languagesID
           AND        c.categories_status= '1'";
 
-  $sql = $db->bindVars($sql, ':categoriesID', $current_category_id, 'integer'); 
-  $sql = $db->bindVars($sql, ':languagesID', $_SESSION['languages_id'], 'integer'); 
+  $sql = $db->bindVars($sql, ':categoriesID', $current_category_id, 'integer');
+  $sql = $db->bindVars($sql, ':languagesID', $_SESSION['languages_id'], 'integer');
   $category = $db->Execute($sql);
 
   if (isset($cPath) && strpos($cPath, '_'))
@@ -80,13 +80,13 @@ if ($category_depth == 'nested')
     {
       $sql = "SELECT count(*) AS total
               FROM   " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd
-              WHERE      c.parent_id = :parentID 
+              WHERE      c.parent_id = :parentID
               AND        c.categories_id = cd.categories_id
               AND        cd.language_id = :languagesID
               AND        c.categories_status= '1'";
 
-      $sql = $db->bindVars($sql, ':parentID', $category_links[$i], 'integer'); 
-      $sql = $db->bindVars($sql, ':languagesID', $_SESSION['languages_id'], 'integer'); 
+      $sql = $db->bindVars($sql, ':parentID', $category_links[$i], 'integer');
+      $sql = $db->bindVars($sql, ':languagesID', $_SESSION['languages_id'], 'integer');
       $categories = $db->Execute($sql);
 
       if ($categories->fields['total'] < 1)
@@ -96,13 +96,13 @@ if ($category_depth == 'nested')
         $categories_query = "SELECT c.categories_id, cd.categories_name, c.categories_image, c.parent_id
                              FROM   " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd
                              WHERE      c.parent_id = :parentID
-                             AND        c.categories_id = cd.categories_id 
-                             AND        cd.language_id = :languagesID 
-                             AND        c.categories_status= '1' 
+                             AND        c.categories_id = cd.categories_id
+                             AND        cd.language_id = :languagesID
+                             AND        c.categories_status= '1'
                              ORDER BY   sort_order, cd.categories_name";
 
         $categories_query = $db->bindVars($categories_query, ':parentID', $category_links[$i], 'integer');
-        $categories_query = $db->bindVars($categories_query, ':languagesID', $_SESSION['languages_id'], 'integer'); 
+        $categories_query = $db->bindVars($categories_query, ':languagesID', $_SESSION['languages_id'], 'integer');
         break; // we've found the deepest category the customer is in
       }
     }
@@ -116,7 +116,7 @@ if ($category_depth == 'nested')
                          ORDER BY   sort_order, cd.categories_name";
 
     $categories_query = $db->bindVars($categories_query, ':parentID', $current_category_id, 'integer');
-    $categories_query = $db->bindVars($categories_query, ':languagesID', $_SESSION['languages_id'], 'integer'); 
+    $categories_query = $db->bindVars($categories_query, ':languagesID', $_SESSION['languages_id'], 'integer');
   }
   $categories = $db->Execute(cat_filter($categories_query));
   $number_of_categories = $categories->RecordCount();
@@ -188,7 +188,7 @@ if ($category_depth == 'nested')
   // set the product filters according to selected product type
   $typefilter = 'default';
   if (isset($_GET['typefilter'])) $typefilter = $_GET['typefilter'];
-  require(DIR_WS_INCLUDES . zen_get_index_filters_directory($typefilter . '_filter.php'));
+  require(zen_get_index_filters_directory($typefilter . '_filter.php'));
 
 
 
@@ -202,7 +202,7 @@ if ($category_depth == 'nested')
 }
 $current_categories_description = "";
 // categories_description
-$sql = "SELECT categories_description 
+$sql = "SELECT categories_description
         FROM " . TABLE_CATEGORIES_DESCRIPTION . "
         WHERE categories_id= :categoriesID
         AND language_id = :languagesID";

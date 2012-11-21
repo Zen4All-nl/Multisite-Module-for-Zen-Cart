@@ -3,10 +3,10 @@
  * manufacturers sidebox - displays a list of manufacturers so customer can choose to filter on their products only
  *
  * @package templateSystem
- * @copyright Copyright 2003-2005 Zen Cart Development Team
+ * @copyright Copyright 2003-2012 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: manufacturers.php 2834 2006-01-11 22:16:37Z birdbrain $
+ * @version GIT: $Id: Author: DrByte  Thu Jul 12 12:27:04 2012 -0400 Modified in v1.5.1 $
  */
 
 // test if manufacturers sidebox should show
@@ -50,7 +50,7 @@ if ($show_manufacturers) {
     }
 
     while (!$manufacturer_sidebox->EOF) {
-      $manufacturer_sidebox_name = ((strlen($manufacturer_sidebox->fields['manufacturers_name']) > MAX_DISPLAY_MANUFACTURER_NAME_LEN) ? substr($manufacturer_sidebox->fields['manufacturers_name'], 0, MAX_DISPLAY_MANUFACTURER_NAME_LEN) . '..' : $manufacturer_sidebox->fields['manufacturers_name']);
+      $manufacturer_sidebox_name = zen_output_string(((strlen($manufacturer_sidebox->fields['manufacturers_name']) > (int)MAX_DISPLAY_MANUFACTURER_NAME_LEN) ? substr($manufacturer_sidebox->fields['manufacturers_name'], 0, (int)MAX_DISPLAY_MANUFACTURER_NAME_LEN) . '..' : $manufacturer_sidebox->fields['manufacturers_name']), false, true);
       $manufacturer_sidebox_array[] = array('id' => $manufacturer_sidebox->fields['manufacturers_id'],
                                        'text' => $manufacturer_sidebox_name);
 
@@ -63,4 +63,3 @@ if ($show_manufacturers) {
     require($template->get_template_dir($column_box_default, DIR_WS_TEMPLATE, $current_page_base,'common') . '/' . $column_box_default);
   }
 } // $show_manufacturers
-?>

@@ -3,10 +3,10 @@
  * whats_new sidebox - displays a random "new" product
  *
  * @package templateSystem
- * @copyright Copyright 2003-2005 Zen Cart Development Team
+ * @copyright Copyright 2003-2010 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: whats_new.php 4162 2006-08-17 03:55:02Z ajeh $
+ * @version $Id: whats_new.php 15880 2010-04-11 16:24:30Z wilt $
  */
 
 // display limits
@@ -17,6 +17,7 @@
                            from (" . TABLE_PRODUCTS . " p
                            left join " . TABLE_PRODUCTS_DESCRIPTION . " pd on p.products_id = pd.products_id )
                            where p.products_id = pd.products_id
+                           and pd.language_id = '" . (int)$_SESSION['languages_id'] . "'
                            and p.products_status = 1 " . $display_limit;
 
 //  $random_whats_new_sidebox_product = zen_random_select($random_whats_new_sidebox_product_query);
@@ -28,4 +29,3 @@
     $title_link = FILENAME_PRODUCTS_NEW;
     require($template->get_template_dir($column_box_default, DIR_WS_TEMPLATE, $current_page_base,'common') . '/' . $column_box_default);
   }
-?>

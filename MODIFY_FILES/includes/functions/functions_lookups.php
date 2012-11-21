@@ -4,10 +4,10 @@
  * Lookup Functions for various Zen Cart activities such as countries, prices, products, product types, etc
  *
  * @package functions
- * @copyright Copyright 2003-2007 Zen Cart Development Team
+ * @copyright Copyright 2003-2011 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: functions_lookups.php 4767 2006-10-16 16:31:12Z ajeh $
+ * @version $Id: functions_lookups.php 19352 2011-08-19 16:13:43Z ajeh $
  */
 
 
@@ -312,6 +312,7 @@
     return $the_products_category->fields['categories_id'];
   }
 
+
 /*
  * Return category's image
  * TABLES: categories
@@ -409,11 +410,12 @@
  *  return attributes products_options_sort_order
  *  TABLES: PRODUCTS_OPTIONS, PRODUCTS_ATTRIBUTES
  */
-  function zen_get_attributes_options_sort_order($products_id, $options_id, $options_values_id) {
+  function zen_get_attributes_options_sort_order($products_id, $options_id, $options_values_id, $lang_num = '') {
     global $db;
+      if ($lang_num == '') $lang_num = (int)$_SESSION['languages_id'];
       $check = $db->Execute("select products_options_sort_order
                              from " . TABLE_PRODUCTS_OPTIONS . "
-                             where products_options_id = '" . (int)$options_id . "' limit 1");
+                             where products_options_id = '" . (int)$options_id . "' and language_id = '" . $lang_num . "' limit 1");
 
       $check_options_id = $db->Execute("select products_id, options_id, options_values_id, products_options_sort_order
                              from " . TABLE_PRODUCTS_ATTRIBUTES . "
@@ -442,10 +444,10 @@
     }
 
 // text required validation
-    if (ereg('^txt_', $option)) {
-      $check_attributes = $db->Execute("select attributes_display_only, attributes_required from " . TABLE_PRODUCTS_ATTRIBUTES . " where products_id='" . (int)$product_id . "' and options_id='" . (int)ereg_replace('txt_', '', $option) . "' and options_values_id='0'");
+    if (preg_match('/^txt_/', $option)) {
+      $check_attributes = $db->Execute("select attributes_display_only, attributes_required from " . TABLE_PRODUCTS_ATTRIBUTES . " where products_id='" . (int)$product_id . "' and options_id='" . (int)preg_replace('/txt_/', '', $option) . "' and options_values_id='0'");
 // text cannot be blank
-      if ($check_attributes->fields['attributes_required'] == '1' and empty($value)) {
+      if ($check_attributes->fields['attributes_required'] == '1' && (empty($value) && !is_numeric($value))) {
         $check_valid = false;
       }
     }
@@ -571,18 +573,18 @@
     return $cc_check_accepted;
   }
 
-/*
- * Return Category Name from product ID
- * TABLES: categories_name
- */
+////
+// TABLES: categories_name from products_id
   function zen_get_categories_name_from_product($product_id) {
     global $db;
 
-    $check_products_category= $db->Execute("select products_id, categories_id from " . TABLE_PRODUCTS_TO_CATEGORIES . " where products_id='" . (int)$product_id . "' limit 1");
-    $the_categories_name= $db->Execute("select categories_name from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id= '" . (int)$check_products_category->fields['categories_id'] . "' and language_id= '" . (int)$_SESSION['languages_id'] . "'");
+//    $check_products_category= $db->Execute("select products_id, categories_id from " . TABLE_PRODUCTS_TO_CATEGORIES . " where products_id='" . $product_id . "' limit 1");
+    $check_products_category = $db->Execute("select products_id, master_categories_id from " . TABLE_PRODUCTS . " where products_id = '" . (int)$product_id . "'");
+    $the_categories_name= $db->Execute("select categories_name from " . TABLE_CATEGORIES_DESCRIPTION . " where categories_id= '" . $check_products_category->fields['master_categories_id'] . "' and language_id= '" . $_SESSION['languages_id'] . "'");
 
     return $the_categories_name->fields['categories_name'];
   }
+
 
 /*
  * configuration key value lookup in TABLE_PRODUCT_TYPE_LAYOUT
@@ -776,6 +778,7 @@
     $product_lookup = $db->Execute("select " . $what_field . " as lookup_field
                               from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd
                               where p.products_id ='" . (int)$product_id . "'
+                              and pd.products_id = p.products_id
                               and pd.language_id = '" . (int)$language . "'");
 
     $return_field = $product_lookup->fields['lookup_field'];
@@ -795,6 +798,7 @@
     $category_lookup = $db->Execute("select " . $what_field . " as lookup_field
                               from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd
                               where c.categories_id ='" . (int)$categories_id . "'
+                              and c.categories_id = cd.categories_id
                               and cd.language_id = '" . (int)$language . "'");
 
     $return_field = $category_lookup->fields['lookup_field'];
@@ -810,25 +814,18 @@
  */
   function zen_get_index_filters_directory($check_file, $dir_only = 'false') {
     global $template_dir;
-
     $zv_filename = $check_file;
     if (!strstr($zv_filename, '.php')) $zv_filename .= '.php';
-
-    if (file_exists(DIR_WS_INCLUDES . 'index_filters/' . $template_dir . '/' . $zv_filename)) {
-      $template_dir_select = $template_dir . '/';
-    } else {
-      $template_dir_select = '';
+    $checkArray = array();
+    $checkArray[] = DIR_WS_INCLUDES . 'index_filters/' . $template_dir . '/' . $zv_filename;
+    $checkArray[] = DIR_WS_INCLUDES . 'index_filters/' . $zv_filename;
+    $checkArray[] = DIR_WS_INCLUDES . 'index_filters/' . $template_dir . '/' . 'default_filter.php';
+    foreach($checkArray as $key => $val) {
+      if (file_exists($val)) {
+        return ($dir_only == 'true') ? $val = substr($val, 0, strpos($val, '/')) : $val;
+      }
     }
-
-    if (!file_exists(DIR_WS_INCLUDES . 'index_filters/' . $template_dir_select . '/' . $zv_filename)) {
-      $zv_filename = 'default';
-    }
-
-    if ($dir_only == 'true') {
-      return 'index_filters/' . $template_dir_select;
-    } else {
-      return 'index_filters/' . $template_dir_select . $zv_filename;
-    }
+    return DIR_WS_INCLUDES . 'index_filters/' . 'default_filter.php';
   }
 
 ////
@@ -929,8 +926,9 @@
     // 120 days; 24 hours; 60 mins; 60secs
     $date_range = time();
     $zc_new_date = date('Ymd', $date_range);
-    $new_range = ' and p.products_date_available >=' . $zc_new_date . '235959';
-//    $new_range = ' and ' . EXPECTED_PRODUCTS_FIELD . ' <=' . $zc_new_date;
+// need to check speed on this for larger sites
+//    $new_range = ' and date_format(p.products_date_available, \'%Y%m%d\') >' . $zc_new_date;
+    $new_range = ' and p.products_date_available >' . $zc_new_date . '235959';
 
     return $new_range;
   }

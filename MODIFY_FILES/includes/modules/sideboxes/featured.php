@@ -3,10 +3,10 @@
  * featured sidebox - displays a random Featured Product
  *
  * @package templateSystem
- * @copyright Copyright 2003-2005 Zen Cart Development Team
+ * @copyright Copyright 2003-2007 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: featured.php 2808 2006-01-06 17:17:32Z drbyte $
+ * @version $Id: featured.php 6475 2007-06-08 21:10:33Z ajeh $
  */
 
 // test if box should display

@@ -3,10 +3,10 @@
  * best_sellers sidebox - displays selected number of (usu top ten) best selling products
  *
  * @package templateSystem
- * @copyright Copyright 2003-2005 Zen Cart Development Team
+ * @copyright Copyright 2003-2011 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: best_sellers.php 2718 2005-12-28 06:42:39Z drbyte $
+ * @version $Id: best_sellers.php 18941 2011-06-13 22:12:42Z wilt $
  */
 
 // test if box should display
@@ -30,7 +30,8 @@
   }
 
   if ($show_best_sellers == true) {
-    if (isset($current_category_id) && ($current_category_id > 0)) {
+    $limit = (trim(MAX_DISPLAY_BESTSELLERS) == "") ? "" : " LIMIT " . (int)MAX_DISPLAY_BESTSELLERS;
+  	if (isset($current_category_id) && ($current_category_id > 0)) {
       $best_sellers_query = "select distinct p.products_id, pd.products_name, p.products_ordered
                              from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, "
                                     . TABLE_PRODUCTS_TO_CATEGORIES . " p2c, " . TABLE_CATEGORIES . " c
@@ -41,11 +42,10 @@
                              and p.products_id = p2c.products_id
                              and p2c.categories_id = c.categories_id
                              and '" . (int)$current_category_id . "' in (c.categories_id, c.parent_id)
-                             order by p.products_ordered desc, pd.products_name
-                             limit " . MAX_DISPLAY_BESTSELLERS;
+                             order by p.products_ordered desc, pd.products_name";
 
+      cat_filter($best_sellers_query) .= $limit;
       $best_sellers = $db->Execute(cat_filter($best_sellers_query));
-
     } else {
       $best_sellers_query = "select distinct p.products_id, pd.products_name, p.products_ordered
                              from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd
@@ -53,13 +53,12 @@
                              and p.products_ordered > 0
                              and p.products_id = pd.products_id
                              and pd.language_id = '" . (int)$_SESSION['languages_id'] . "'
-                             order by p.products_ordered desc, pd.products_name
-                             limit " . MAX_DISPLAY_BESTSELLERS;
+                             order by p.products_ordered desc, pd.products_name";
 
+      cat_filter($best_sellers_query) .= $limit;
       $best_sellers = $db->Execute(cat_filter($best_sellers_query));
     }
-
-    if ($best_sellers->RecordCount() >= MIN_DISPLAY_BESTSELLERS) {
+if ($best_sellers->RecordCount() >= MIN_DISPLAY_BESTSELLERS) {
       $title =  BOX_HEADING_BESTSELLERS;
       $box_id =  'bestsellers';
       $rows = 0;

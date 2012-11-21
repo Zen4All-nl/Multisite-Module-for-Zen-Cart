@@ -3,10 +3,10 @@
  * Specials
  *
  * @package page
- * @copyright Copyright 2003-2006 Zen Cart Development Team
+ * @copyright Copyright 2003-2011 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: main_template_vars.php 4629 2006-09-28 15:29:18Z ajeh $
+ * @version $Id: main_template_vars.php 18802 2011-05-25 20:23:34Z drbyte $
  */
 
 if (MAX_DISPLAY_SPECIAL_PRODUCTS > 0 ) {
@@ -53,4 +53,3 @@ if (MAX_DISPLAY_SPECIAL_PRODUCTS > 0 ) {
     require($template->get_template_dir('tpl_specials_default.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_specials_default.php');
   }
 }
-?>
