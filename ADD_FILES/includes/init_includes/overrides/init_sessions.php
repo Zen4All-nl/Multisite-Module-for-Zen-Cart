@@ -4,14 +4,24 @@
  * see {@link  http://www.zen-cart.com/wiki/index.php/Developers_API_Tutorials#InitSystem wikitutorials} for more details.
  *
  * @package initSystem
- * @copyright Copyright 2003-2005 Zen Cart Development Team
+ * @copyright Copyright 2003-2011 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: init_sessions.php 5164 2006-12-10 19:01:25Z drbyte $
+ * @version $Id: init_sessions.php 18695 2011-05-04 05:24:19Z drbyte $
  */
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
 }
+/**
+ * sanity check in case zenid has been incorrectly supplied as an htmlencoded param name
+ */
+if (!isset($_GET['zenid']) && isset($_GET['amp;zenid'])) {
+  $_GET['zenid'] = $_GET['amp;zenid'];
+  unset($_GET['amp;zenid']);
+} else if (isset($_GET['amp;zenid'])) {
+  unset($_GET['amp;zenid']);
+}
+
 /**
  * require the session handling functions
  */
@@ -24,7 +34,17 @@ zen_session_save_path(SESSION_WRITE_DIRECTORY);
 /**
  * set the session cookie parameters
  */
-session_set_cookie_params(0, '/', (zen_not_null($current_domain) ? $current_domain : ''));
+$path = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+if (defined('SESSION_USE_ROOT_COOKIE_PATH') && SESSION_USE_ROOT_COOKIE_PATH  == 'True') $path = '/';
+$path = (defined('CUSTOM_COOKIE_PATH')) ? CUSTOM_COOKIE_PATH : $path;
+$domainPrefix = (!defined('SESSION_ADD_PERIOD_PREFIX') || SESSION_ADD_PERIOD_PREFIX == 'True') ? '.' : '';
+$secureFlag = ((ENABLE_SSL == 'true' && substr(HTTP_SERVER, 0, 6) == 'https:' && substr(HTTPS_SERVER, 0, 6) == 'https:') || (ENABLE_SSL == 'false' && substr(HTTP_SERVER, 0, 6) == 'https:')) ? TRUE : FALSE;
+
+if (PHP_VERSION >= '5.2.0') {
+  session_set_cookie_params(0, $path, (zen_not_null($cookieDomain) ? $domainPrefix . $cookieDomain : ''), $secureFlag, TRUE);
+} else {
+  session_set_cookie_params(0, $path, (zen_not_null($cookieDomain) ? $domainPrefix . $cookieDomain : ''), $secureFlag);
+}
 /**
  * set the session ID if it exists
  */
@@ -65,7 +85,7 @@ if (SESSION_FORCE_COOKIE_USE == 'True') {
   if (zen_not_null($user_agent)) {
     $spiders = file(DIR_WS_INCLUDES . 'spiders.txt');
     for ($i=0, $n=sizeof($spiders); $i<$n; $i++) {
-      if (zen_not_null($spiders[$i])) {
+      if (zen_not_null($spiders[$i]) && substr($spiders[$i], 0, 4) != '$Id:') {
         if (is_integer(strpos($user_agent, trim($spiders[$i])))) {
           $spider_flag = true;
           break;
@@ -76,11 +96,20 @@ if (SESSION_FORCE_COOKIE_USE == 'True') {
   if ($spider_flag == false) {
     zen_session_start();
     $session_started = true;
+  } else {
+    if (isset($_GET['zenid']) && $_GET['zenid'] != '') {
+      $tmp = (isset($_GET['main_page']) && $_GET['main_page'] != '') ? $_GET['main_page'] : FILENAME_DEFAULT;
+      @header("HTTP/1.1 301 Moved Permanently");
+      @zen_redirect(@zen_href_link($tmp, @zen_get_all_get_params(array('zenid')), $request_type, FALSE));
+      unset($tmp);
+      die();
+    }
   }
 } else {
   zen_session_start();
   $session_started = true;
 }
+unset($spiders);
 /**
  * set host_address once per session to reduce load on server
  */
@@ -130,4 +159,3 @@ if (SESSION_CHECK_IP_ADDRESS == 'True') {
     zen_redirect(zen_href_link(FILENAME_LOGIN));
   }
 }
-?>

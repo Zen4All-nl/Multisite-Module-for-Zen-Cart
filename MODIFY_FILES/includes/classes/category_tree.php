@@ -18,7 +18,7 @@ if (!defined('IS_ADMIN_FLAG')) {
  * @package classes
  */
 class category_tree extends base {
-	
+
   function zen_category_tree($product_type = "all") {
     global $db, $cPath, $cPath_array;
     if ($product_type != 'all') {

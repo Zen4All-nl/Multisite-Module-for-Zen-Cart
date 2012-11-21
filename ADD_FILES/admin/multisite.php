@@ -132,7 +132,7 @@ input.multisite_sites{
 }
 </style>
 </head>
-<body onload="init()">
+<body onLoad="init()">
 <!-- header //-->
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 <!-- header_eof //-->
@@ -143,14 +143,14 @@ input.multisite_sites{
 <!-- body_text //-->
     <td width="100%" valign="top"><table border="0" width="100%" cellspacing="0" cellpadding="2">
       <tr>
-        <td><table border="0" width="100%" cellspacing="0" cellpadding="0">
+        <td width="100%"><table border="0" width="100%" cellspacing="0" cellpadding="0">
           <tr>
             <td class="pageHeading" style="height:48px">Multisite</td>
           </tr>
         </table></td>
       </tr>
       <tr>
-      	<td width="100%" valign="top">
+        <td width="100%" valign="top">
 <?php
 //Display menu ...
 ?>
