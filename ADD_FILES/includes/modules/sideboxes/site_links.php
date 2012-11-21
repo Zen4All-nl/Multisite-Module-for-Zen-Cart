@@ -7,7 +7,7 @@
 
 // test if box should display
 
-  unset($more_information);
+  unset($site_links);
 
 // test if links should display
 
@@ -18,8 +18,8 @@
     add_site_link('Example Shop -- Edit site_links.php...','http://www.example.com');
 
 // only show if links are active
-  if (sizeof($more_information) > 0) {
-    require($template->get_template_dir('tpl_more_information.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes') . '/tpl_more_information.php');
+  if (sizeof($site_links) > 0) {
+    require($template->get_template_dir('tpl_site_links.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes') . '/tpl_site_links.php');
 
     $title =  BOX_HEADING_SITE_LINKS;
     $title_link = false;
@@ -27,7 +27,7 @@
   }
   
   function add_site_link($site_name,$url='',$session=true) {
-	global $default_server_name, $more_information;
+	global $default_server_name, $site_links;
 	if(($site_name!=$default_server_name)&&("http://$default_server_name"!=$url)) {
 		if($url=='') {
 			$url = "http://$site_name";
@@ -40,7 +40,7 @@
 			}
 			$url .= $separator . zen_session_name() . '=' . zen_session_id();
 		}
-		$more_information[] = '<a href="'.$url.'">'.$site_name.'</a>';
+		$site_links[] = '<a href="'.$url.'">'.$site_name.'</a>';
 	}
   }
 ?>
