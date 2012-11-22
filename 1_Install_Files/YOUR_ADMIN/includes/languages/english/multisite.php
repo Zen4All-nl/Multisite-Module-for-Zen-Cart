@@ -16,3 +16,6 @@ define('MULTISITE_CATEGORIE_REMINDER_TEXT','(don\'t forget to save)');
 define('MULTISITE_CATEGORIE_ALL_TEXT','All');
 define('MULTISITE_CATEGORIE','Categories');
 define('MULTISITE_SITE','sites');
+
+define('EZPAGE_MULTI_FILTER','Multisite Filter');
+define('EZPAGE_MULTI_EXPLAIN','See Multisite Notes, Surround Sites with &lt;!--Site Name 1-Site Name2--&gt;');

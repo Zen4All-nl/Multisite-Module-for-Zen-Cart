@@ -1,0 +1,1 @@
+ALTER TABLE `ezpages` DROP `ezpages_description`
