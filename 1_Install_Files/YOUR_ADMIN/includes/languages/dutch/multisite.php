@@ -10,7 +10,7 @@ define('MULTISITE_CONFIG_TEXT','List of the config that you can override from a 
 define('MULTISITE_CATEGORIE_TITLE','Categorieën / Sites');
 define('MULTISITE_CATEGORIE_TEXT','You can use this tool in order to allocate a category to a site.<br/>All you have to do is to write the SITE_NAME (defined in the folder config_sites) in the collomn Sites.<br/>If a categories has to be seen by more than one site, then you have to write the sites separated by a dash.<br/>Voorbeeld: site1-site2-site3<br/><br/>If you want a sub-category  to be seen on a site, you should also add its parent category.');
 define('MULTISITE_CATEGORIE_ADD_LABEL','Voeg deze site aan alle categorieën toe');
-define('MULTISITE_BUTTON_ADD_ALL','Aan alles teovoegen');
+define('MULTISITE_BUTTON_ADD_ALL','Aan alles toevoegen');
 define('MULTISITE_BUTTON_REMOVE_ALL','Uit alles verwijderen');
 define('MULTISITE_CATEGORIE_REMINDER_TEXT','(vergeet niet om op te slaan)');
 define('MULTISITE_CATEGORIE_ALL_TEXT','Alles');
