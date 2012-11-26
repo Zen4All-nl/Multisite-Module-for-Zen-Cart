@@ -51,8 +51,8 @@
 <title><?php echo TITLE; ?></title>
 <link rel="stylesheet" type="text/css" href="includes/stylesheet.css">
 <link rel="stylesheet" type="text/css" href="includes/cssjsmenuhover.css" media="all" id="hoverJS">
-<script language="javascript" src="includes/menu.js"></script>
-<script language="javascript" src="includes/general.js"></script>
+<script type="text/javascript" language="javascript" src="includes/menu.js"></script>
+<script type="text/javascript" language="javascript" src="includes/general.js"></script>
 <script type="text/javascript">
   <!--
   function init()
@@ -116,14 +116,14 @@
   }
   // -->
 </script>
-<style>
+<style type="text/css">
 table.multisite_cats_sites {
   width:400px;
   margin-left:auto;
   margin-right:auto;
 }
 table.multisite_cats_sites td {
-border-bottom:1px solid #BBBBBB;
+border-bottom:1px solid #bbb;
 white-space: nowrap;
 }
 
@@ -145,7 +145,8 @@ input.multisite_sites{
       <tr>
         <td width="100%"><table border="0" width="100%" cellspacing="0" cellpadding="0">
           <tr>
-            <td class="pageHeading" style="height:48px"><?php echo MULTISITE_TITLE ; ?></td>
+            <td class="pageHeading"><?php echo MULTISITE_TITLE ; ?></td>
+            <td class="pageHeading" align="right"><?php echo zen_draw_separator('pixel_trans.gif', HEADING_IMAGE_WIDTH, HEADING_IMAGE_HEIGHT); ?></td>
           </tr>
         </table></td>
       </tr>
@@ -195,14 +196,14 @@ if(isset($_GET['action'])) {
       <input type="button" onclick="add_to_all_cats()" value="<?php echo MULTISITE_BUTTON_ADD_ALL ; ?>" />
       <input type="button" onclick="remove_from_all_cats()" value="<?php echo MULTISITE_BUTTON_REMOVE_ALL ; ?>" />
       <?php echo MULTISITE_CATEGORIE_REMINDER_TEXT ; ?>
-      <br/><br/>
+      <br /><br />
       <?php
       $multisite_category_tree=zen_get_category_tree();
       //print_r($multisite_category_tree);exit;
       $multisite_list = array();
       if(isset($_GET['site'])) {
         $filter = ' AND cd.categories_description LIKE "%-'.$_GET['site'].'-%" ';
-        $site_param = '&site='.$_GET['site'];
+        $site_param = '&amp;site='.$_GET['site'];
       } else {
         $filter ='';
         $site_param = '';
@@ -267,10 +268,10 @@ if(isset($_GET['action'])) {
       $display_sites = array();
       $display_sites[] = '<a href="'.zen_href_link('multisite','action='.$_GET['action']).'">' . MULTISITE_CATEGORIE_ALL_TEXT . '</a> ('.$total_cats.')';
       foreach($multisite_list as $site=>$cat_number) {
-        $display_sites[] =  '<a href="'.zen_href_link('multisite','action='.$_GET['action'].'&site='.$site).'">'.$site.'</a> ('.$cat_number.')';
+        $display_sites[] =  '<a href="'.zen_href_link('multisite','action='.$_GET['action'].'&amp;site='.$site).'">'.$site.'</a> ('.$cat_number.')';
       }
       echo implode(' - ',$display_sites)."<br /><br />\n";
-      echo zen_draw_form('save_multisite', 'multisite', 'action='.$_GET['action'].'&mode=save'.$site_param,'post', 'enctype="multipart/form-data"');
+      echo zen_draw_form('save_multisite', 'multisite', 'action='.$_GET['action'].'&amp;mode=save'.$site_param,'post', 'enctype="multipart/form-data"');
       echo zen_image_submit('button_save.gif', IMAGE_SAVE);
       ?>
       <table class="multisite_cats_sites">
@@ -280,15 +281,16 @@ if(isset($_GET['action'])) {
           echo '<tr>';
           echo '<td>';
           if ($multisite_category['status'] == '1') {
-            echo '<a target="_blank" href="'.zen_href_link(FILENAME_CATEGORIES, 'action=setflag_categories&flag=0&cID='.$multisite_category['id'].'&cPath='.$multisite_category['cPath_parent']).'">'.zen_image(DIR_WS_IMAGES.'icon_green_on.gif',IMAGE_ICON_STATUS_ON).'</a>';
+            echo '<a target="_blank" href="'.zen_href_link(FILENAME_CATEGORIES, 'action=setflag_categories&amp;flag=0&amp;cID='.$multisite_category['id'].'&amp;cPath='.$multisite_category['cPath_parent']).'">'.zen_image(DIR_WS_IMAGES.'icon_green_on.gif',IMAGE_ICON_STATUS_ON).'</a>';
           } else {
-            echo '<a target="_blank" href="'.zen_href_link(FILENAME_CATEGORIES, 'action=setflag_categories&flag=1&cID='.$multisite_category['id'].'&cPath='.$multisite_category['cPath_parent']).'">'.zen_image(DIR_WS_IMAGES.'icon_red_on.gif',IMAGE_ICON_STATUS_OFF).'</a>';
+            echo '<a target="_blank" href="'.zen_href_link(FILENAME_CATEGORIES, 'action=setflag_categories&amp;flag=1&amp;cID='.$multisite_category['id'].'&amp;cPath='.$multisite_category['cPath_parent']).'">'.zen_image(DIR_WS_IMAGES.'icon_red_on.gif',IMAGE_ICON_STATUS_OFF).'</a>';
           }
-          echo '&nbsp;<a href="'.zen_href_link(FILENAME_CATEGORIES,'action=edit_category&cPath='.$multisite_category['cPath_parent'].'&cID='.$multisite_category['id']).'">';
+          echo '&nbsp;<a href="'.zen_href_link(FILENAME_CATEGORIES,'action=edit_category&amp;cPath='.$multisite_category['cPath_parent'].'&amp;cID='.$multisite_category['id']).'">';
           echo zen_image(DIR_WS_IMAGES . 'icon_edit.gif', ICON_EDIT);
           echo '</a>&nbsp;';
           echo '<a href="'.zen_href_link(FILENAME_CATEGORIES,'cPath='.$multisite_category['cPath']).'">';
           echo str_replace(' ','&nbsp;',str_replace('&nbsp;&nbsp;&nbsp;','_&nbsp;',$multisite_category['text']));
+          echo '</a>';
           echo '</td>';
           echo '<td><input class="multisite_sites" type="text" name="site['.$multisite_category['id'].']" value="'.$multisite_category['sites'].'"/></td>';
           echo "</tr>\n";
