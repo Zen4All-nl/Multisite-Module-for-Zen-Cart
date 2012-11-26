@@ -51,6 +51,7 @@
 <title><?php echo TITLE; ?></title>
 <link rel="stylesheet" type="text/css" href="includes/stylesheet.css">
 <link rel="stylesheet" type="text/css" href="includes/cssjsmenuhover.css" media="all" id="hoverJS">
+<link rel="stylesheet" type="text/css" href="includes/SyntaxHighlighter.css">
 <script type="text/javascript" language="javascript" src="includes/menu.js"></script>
 <script type="text/javascript" language="javascript" src="includes/general.js"></script>
 <script type="text/javascript">
@@ -166,7 +167,7 @@ if(isset($_GET['action'])) {
     case 'display_config':
     ?>
       <?php echo MULTISITE_CONFIG_TEXT ; ?><br /><br />
-      <textarea cols="100" rows="40" style="width:90%;"><?php
+      <textarea name="code" class="php" cols="100" rows="40" style="width:90%;"><?php
       $config_query = $db->Execute('SELECT cg.configuration_group_title,c.configuration_key,c.configuration_value,c.configuration_title
       FROM '.TABLE_CONFIGURATION.' c
       LEFT JOIN '.TABLE_CONFIGURATION_GROUP.' cg
@@ -318,6 +319,13 @@ if(isset($_GET['action'])) {
 <!-- footer //-->
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <!-- footer_eof //-->
+<script type="text/javascript" language="javascript" src="includes/shCore.js"></script>
+<script type="text/javascript" language="javascript" src="includes/shBrushPhp.js"></script>
+<script type="text/javascript" language="javascript" src="includes/shBrushXml.js"></script>
+<script type="text/javascript" language="javascript">
+dp.SyntaxHighlighter.ClipboardSwf = '/includes/clipboard.swf';
+dp.SyntaxHighlighter.HighlightAll('code');
+</script>
 </body>
 </html>
 <?php require(DIR_WS_INCLUDES . 'application_bottom.php');
