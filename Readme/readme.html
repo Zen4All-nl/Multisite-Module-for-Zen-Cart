@@ -91,13 +91,13 @@ h2{
       <li>Open the <strong>1_New_Files</strong> folder<br />
         <br />
       </li>
-      <li>Rename the following folders to match your admin folder name.<strong>
+      <li>Rename the following folders to match your admin folder name.
         <br />
         <ul>
-          <li>YOUR_ADMIN</li>
-        </ul></strong><br />
+          <li><strong>YOUR_ADMIN</strong></li>
+        </ul><br />
       </li>
-      <li>Upload the entire contents of the <strong>1_New_Files</strong> folder, includes folder and the images folder to your server, again keeping the file structure intact.
+      <li>Upload the entire contents of the <strong>1_New_Files</strong> folder, includes folder and the admin folder to your server, again keeping the file structure intact.
         <br />
         <ul>
           <li>YOUR_ADMIN/multisite.php</li>
@@ -128,68 +128,114 @@ h2{
         </ul>
         <br />
       </li>
+      <li>Open the<strong> 2_Required_Core_Edits</strong> folder.<br />
+        <br />
+      </li>
+      <li>Rename the following folder to match your admin folder name.
+        <br />
+        <ul>
+          <li><strong>YOUR_ADMIN</strong></li>
+        </ul><br />
+      </li>
+      <li>Before we proceed there are a couple of things to note. The files in the '2_Required_Core_Edits' folder are of two types. The first type of file CANNOT be over-ridden by the use of templates, the second type is of course the opposite and CAN be overridden by the use of Zen-Cart templates. You can read more about Zen-Cart templates on the Zen-Cart website. Thefiles in the folders listed in the next step are the files which CAN be overridden by the use of templates. In the previous version it was advised to just overide the default template files, but I advise against it. It may mean less work now, but in a future upgrade of your Zen Cart it complicates updates.<br>
+        It is also possible your custom template already contains files in the mentioned folders, which would mean the old method is useless.
+        <br />
+        <br />
+      </li>
+      <li>The next folders contain files that have to replace the existing zencart files by the use of the templates. Rename the following folders to match your template folder name.<strong> You need to do this for every template installed !!</strong> The files in these folders <strong>may</strong> need merging with existing files in your template.<br />
+        <ul>
+          <li><strong>includes/modules/YOUR_TEMPLATE</strong></li>
+          <li><strong>includes/modules/sideboxes/YOUR_TEMPLATE</strong></li>
+          <li><strong>includes/templates/YOUR_TEMPLATE</strong></li>
+        </ul>
+      In the next folder there also already may be files present<br />
+        <ul>
+          <li><strong>includes/init_includes/overides</strong></li>
+        </ul>
+        </strong><br />
+      </li>
+      <li>Upload and MERGE where needed the entire contents of the <strong>2_Required_Core_Edits</strong> folder, includes folder and the admin folder to your server, again keeping the file structure intact.
+        <br />
+        <ul>
+          <li>includes/classes/category_tree.php</li>
+          <li>includes/classes/order.php</li>
+          <li>includes/classes/site_map.php</li>
+          <li><em><strong>more files need to be added</strong></em></li>
+        </ul>
+        <br />
+      </li>
+      <li>Make a Template for each site
+        <ul>
+          <li>We assume that you already have a Zen-cart shop installed with some categories and products. You need to have a 2nd template that will be use for your 2nd shop. You can simply copy and past the one from your folder "includes/template/[YOUR_TEMPLATE]" Or you can download some from www.zen-cart.com.<br />
+          <br />
+          </li>
+          <li>TIP: In order to make the things easy, I highly advice you to rename the template to the name of
+each of your site. In this way, you will find easily the folder of the shop you want to modify...
+When you rename your template's name, think of renaming every overriding folder too !
+These folders should be:
+            <ul>
+              <li>includes/templates/YOUR_TEMPLATE</li>
+              <li>includes/languages/YOUR_LANGUAGE/YOUR_TEMPLATE</li>
+              <li>includes/languages/YOUR_LANGUAGE/extra_definitions/YOUR_TEMPLATE</li>
+              <li>includes/languages/YOUR_LANGUAGE/html_includes/YOUR_TEMPLATE</li>
+              <li>includes/languages/YOUR_LANGUAGE/modules/order_total/YOUR_TEMPLATE</li>
+              <li>includes/languages/YOUR_LANGUAGE/modules/payment[YOUR_TEMPLATE</li>
+              <li>includes/languages/YOUR_LANGUAGE/modules/shipping/YOUR_TEMPLATE</li>
+              <li>includes/languages/YOUR_LANGUAGE/modules/YOUR_TEMPLATE</li>
+              <li>includes/languages/YOUR_LANGUAGE/modules/sideboxes/YOUR_TEMPLATE</li>
+            </ul><br />
+          </li>
+          <li>Do not use a template for two sites, otherwise, you will be obliged to have the same language files too (same shops' name and same sideboxes position)<br />
+          <br /></li>
+          <li>In the includes/templates/[YOUR_TEMPLATE]/template_info.php, change the template_name to the name of your site that uses the template:
+            <ul>
+              <li><em>$template_name = 'mysite';</em></li>
+            </ul><br />
+          </li>
+          <li>So, if your sites are called www.site1.com and www.site2.net Then your should rename your template to site1 and site2.<br />The file includes/templates/site1/template_info.php should have the line:
+            <ul>
+              <li><em>$template_name = 'site1';</em></li>
+            </ul>
+          <br />The file includes/templates/site2/template_info.php should have the line:
+            <ul>
+              <li><em>$template_name = 'site1';</em></li>
+            </ul>
+          <br />This will help you later in the admin section; the template selector is now only use for choose the site for which you want to change the sidebox setting.<br /><br />
+          </li>
+        </ul>
+      <li>Create the configuration files of your sites</li>
+      </li>
     </ol>
-    <p>Zen Lightbox is now installed and ready to use!</p>
-    <p>You can configure various settings from the Zen Cart admin (Admin &gt; Configuration &gt; Zen Lightbox).</p>
-    <p><strong>EZ-Pages</strong></p>
-    <p>By default the lightbox effect will be applied to all links that point to images on your EZ-Pages. This functionality can easily be modified via the admin.</p>
-    <p>The gallery mode will automatically be used when more than one link to an image (on an EZ-Page) are located within the same parent element.</p>
-    <p>The only manual bit of coding required is the addition of captions (if you need them). You can add captions by including the rel=&quot;&quot; attribute in your href tag. An example of this can be found below.</p>
-    <div id="code">&lt;a href=&quot;myimage.jpg&quot; <span style="color: #FF0000">rel=&quot;here is my caption&quot;</span>&gt;My Image&lt;/a&gt;  </div>
+    <p>Multi Site is now installed and ready to use!</p>
+    <p>Go to the configuration chapter to read more on how to configuer your sites.</p>
   </div>
-  <h2><a name="upgrade" id="upgrade"></a>Upgrade <span style="color: #F00;">(fresh installation is recommended)</span></h2>
+  <h2><a name="upgrade" id="upgrade"></a>Upgrade <span style="color: #F00;">( Do a fresh installation)</span></h2>
   <div id="contentDescription" >
-  <h3><span style="color: blue; border-bottom:1px solid;">Upgrading from Zen Lightbox 1.6.3</span></h3>
-  <p><strong>File updates</strong>:  
-  <ul>
-    <li>Remove [images/zen_lightbox]</li>
-    <li> [includes/classes/zen_lightbox/autoload_default.php] </li>
-    <li> [includes/modules/pages/page/jscript_zen_lightbox.php] </li>
-    <li> [includes/templates/YOUR_TEMPLATE_FOLDER/css/stylesheet_zen_lightbox.css</li>
-  </ul>
-  <hr />
+  <p><strong>Upgrading from previous vwersions is not supported</strong> Please do a fresh instaltion</p>
   </div>
   <h2><a name="version_history" id="version_history"></a>Version History</h2>
   <div id="contentDescription">
-  	<p>Version 1.6.4_1.5 - Release Date: 2012-04-28/p>
+  	<p>Version 1.0 Current- Release Date: 2012-xx-xx</p>
     <ul>
-    <li>Removed [images/zen_lightbox]</li>
-    <li>modified [includes/classes/zen_lightbox/autoload_default.php]
+    <li>Removed []</li>
+    <li>modified [includes/classes/]
       <ul>
-        <li>handles the &quot;Always show Prev / Next&quot; Setting better</li>
-        </ul>
-    </li>
-    <li>modified [includes/modules/pages/page/jscript_zen_lightbox.php]
-      <ul>
-        <li>brings back missing EZ-Page auto lightbox feature</li>
-        </ul>
-    </li>
-    <li>modified [includes/templates/YOUR_TEMPLATE_FOLDER/css/stylesheet_zen_lightbox.css
-      <ul>
-        <li>added 2 classes to hande new &quot;Always show Prev / Next&quot; code</li>
-        </ul>
+        <li>some text</li></ul></li><li>
     </li>
     </ul>
-    <p>Version 1.0 -  Release Date: 2006-09-05</p>
+    <p>Version 0.4 -  Release Date: 2007-08-07</p>
     <ul>
       <li>Initial release</li>
     </ul>
   </div>
   <h2><a name="faqs" id="faqs"></a>FAQs</h2>
   <div id="contentDescription">
-    <p>Below is a list of frequently asked questions.</p>
-    <p><strong>How do I setup additional images for my products?</strong><br />
-    While this question isn't directly related to Zen Lightbox, I find that a lot of people have trouble setting up additional images and, therefore, are unable to experience the gallery feature of Zen Lightbox. Please read the tutorial at the link below to understand how additional images work.</p>
-    <p><a href="http://tutorials.zen-cart.com/index.php?article=58" target="_blank">http://tutorials.zen-cart.com/index.php?article=58</a></p>
-    <p><strong>How do I change the colour of the overlay?</strong><br />
-    Open includes/templates/YOUR-TEMPLATE-FOLDER/css/stylesheet_lightbox.css and find the following code, which should be at the bottom.</p>
-<div id="code"> #lbOverlay{background-color:<span style="color: #FF0000">#000</span>;height:100%;left:0;position:fixed;top:0;width:100%;z-index:9999}</div>
-    <p>Now, change the background-color value to the colour of your choice.</p>
+    <p>&nbsp;</p>
   </div>
   <h2><a name="support" id="support"></a>Support</h2>
   <div id="contentDescription">
     <p>You will find the official support thread at the link below. Please feel free to post any comments or questions there.</p>
-    <p><a href="http://www.zen-cart.com/forum/showthread.php?t=45314" target="_blank">http://www.zen-cart.com/forum/showthread.php?t=45314</a></p>
+    <p>&nbsp;</p>
   </div>
 
 </div>
