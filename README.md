@@ -6,6 +6,7 @@
       <li><a href="#whats_new">What's New</a></li>
       <li><a href="#installation">Installation</a></li>
       <li><a href="#upgrade">Upgrade</a></li>
+      <li><a href="#configuration">Configuration</a></li>
       <li><a href="#version_history">Version History</a></li>
       <li><a href="#faqs">FAQs</a></li>
       <li><a href="#support">Support</a></li>
@@ -26,7 +27,7 @@
     <li>The module is now multi lingual on the admin side as well as the Frontend</li>
     <li>The sitelink sidebox has its own tpl file</li>
     <li>Added ez-page filter module for multi site</li>
-    <li>Added SyntaxHightlighter 1.5.1 to multisite.php</li>
+    <li>Added SyntaxHightlighter 1.5.1 to multisite.php for easier reading and copiyng code</li>
     </ul>
   </div>
   <h2><a name="installation" id="installation"></a>Installation</h2>
@@ -42,8 +43,10 @@
       <li>Extract the contents  (of Beta-for-ZC-1.5.1.zip) to a temporary location, keeping the file structure intact. (Note: If you can't open this file try using <a href="http://www.7-zip.org/" target="_blank">7-Zip</a>, it's free!)<br />
         <br />
       </li>
-      <li>Open the <strong>4_SQL_Files</strong> folder and then open the install.sql file in a text editor (not microsoft word) and copy all of the text to the clipboard. Next go to (Admin &gt; Tools &gt; Install SQL Patches) in your Zen Cart admin and paste the contents of install.sql into the text area and then press the send button.<br />
-      This adds the column 'order_site' to the 'Orders' Table to know which site orders originate from, and the column 'ezpages_description' to the 'ezpages' Table for ez page filtering.
+      <li>Open the <strong>4_SQL_Files</strong> folder and then open the install.sql file in a text editor (not microsoft word) and copy all of the text to the clipboard. Next go to (Admin &gt; Tools &gt; Install SQL Patches) in your Zen Cart admin and paste the contents of install.sql into the text area and then press the send button. Or copy the code from below<br />
+      <pre name="code" class="sql">ALTER TABLE orders ADD order_site varchar(30) NOT NULL DEFAULT 'no';
+ALTER TABLE ezpages ADD ezpages_description TEXT;</pre>
+        This adds the column 'order_site' to the 'Orders' Table to know which site orders originate from, and the column 'ezpages_description' to the 'ezpages' Table for ez page filtering.
         <br />
       </li>
       <li><span style="color:#900"><b>Alternative to step 3.</b></span> Open phpMyAdmin for your site and navigate to your database. Choose 'Import' and then 'choose file' and navigate to and select install.sql then choose 'Go'.<br /><br />
@@ -117,10 +120,45 @@
       <li>Upload and MERGE where needed the entire contents of the <strong>2_Required_Core_Edits</strong> folder, includes folder and the admin folder to your server, again keeping the file structure intact.
         <br />
         <ul>
+          <li>YOUR_ADMIN/ezpages.php</li>
+          <li>YOUR_ADMIN/orders.php</li>
           <li>includes/classes/category_tree.php</li>
           <li>includes/classes/order.php</li>
           <li>includes/classes/site_map.php</li>
-          <li><em><strong>more files need to be added</strong></em></li>
+          <li>includes/functions/functions_categories.php</li>
+          <li>includes/functions/functions_lookups.php</li>
+          <li>includes/init_includes/overrides/init_add_crumbs.php</li>
+          <li>includes/init_includes/overrides/init_category_path.php</li>
+          <li>includes/init_includes/overrides/init_sessions.php</li>
+          <li>includes/init_includes/overrides/init_templates.php</li>
+          <li>includes/pages/advanced_search_result/header_php.php</li>
+          <li>includes/pages/featured_products/header_php.php</li>
+          <li>includes/pages/index/main_template_vars.php</li>
+          <li>includes/pages/products_all/header_php.php</li>
+          <li>includes/pages/products_new/header_php.php</li>
+          <li>includes/pages/reviews/header_php.php</li>
+          <li>includes/pages/specials/main_template_vars.php</li>
+          <li>includes/modules/sideboxes/YOUR_TEMPLATE/best_sellers.php</li>
+          <li>includes/modules/sideboxes/YOUR_TEMPLATE/categories.php</li>
+          <li>includes/modules/sideboxes/YOUR_TEMPLATE/document_categories.php</li>
+          <li>includes/modules/sideboxes/YOUR_TEMPLATE/ezpages.php</li>
+          <li>includes/modules/sideboxes/YOUR_TEMPLATE/featured.php</li>
+          <li>includes/modules/sideboxes/YOUR_TEMPLATE/manufacturers.php</li>
+          <li>includes/modules/sideboxes/YOUR_TEMPLATE/reviews.php</li>
+          <li>includes/modules/sideboxes/YOUR_TEMPLATE/specials.php</li>
+          <li>includes/modules/sideboxes/YOUR_TEMPLATE/whats_new.php</li>
+          <li>includes/modules/YOUR_TEMPLATE/categories_tabs.php</li>
+          <li>includes/modules/YOUR_TEMPLATE/category_row.php</li>
+          <li>includes/modules/YOUR_TEMPLATE/ezpages_bar_footer.php</li>
+          <li>includes/modules/YOUR_TEMPLATE/ezpages_bar_header.php</li>
+          <li>includes/modules/YOUR_TEMPLATE/featured_products.php</li>
+          <li>includes/modules/YOUR_TEMPLATE/meta_tags.php</li>
+          <li>includes/modules/YOUR_TEMPLATE/new_products.php</li>
+          <li>includes/modules/YOUR_TEMPLATE/product_listing.php</li>
+          <li>includes/modules/YOUR_TEMPLATE/specials_index.php</li>
+          <li>includes/templates/YOUR_TEMPLATE/sideboxes/tpl_categories.php</li>
+          <li>includes/templates/YOUR_TEMPLATE/templates/tpl_advanced_search_default.php</li>
+          <li></li>
         </ul>
         <br />
       </li>
@@ -148,30 +186,59 @@ These folders should be:
           <li>Do not use a template for two sites, otherwise, you will be obliged to have the same language files too (same shops' name and same sideboxes position)<br />
           <br /></li>
           <li>In the includes/templates/[YOUR_TEMPLATE]/template_info.php, change the template_name to the name of your site that uses the template:
-            <ul>
-              <li><em>$template_name = 'mysite';</em></li>
-            </ul><br />
+              <pre name="code" class="php">$template_name = 'mysite';</pre>
           </li>
           <li>So, if your sites are called www.site1.com and www.site2.net Then your should rename your template to site1 and site2.<br />The file includes/templates/site1/template_info.php should have the line:
-            <ul>
-              <li><em>$template_name = 'site1';</em></li>
-            </ul>
+            <pre name="code" class="php">$template_name = 'site1';</pre>
           <br />The file includes/templates/site2/template_info.php should have the line:
-            <ul>
-              <li><em>$template_name = 'site1';</em></li>
-            </ul>
+            <pre name="code" class="php">$template_name = 'site1';</pre>
           <br />This will help you later in the admin section; the template selector is now only use for choose the site for which you want to change the sidebox setting.<br /><br />
           </li>
         </ul>
-      <li>Create the configuration files of your sites</li>
+      <li>Create the configuration files of your sites
+        <p>Add this line at the beginning of your "includes/configure.php":
+        <pre name="code" class="php">include_once('includes/config_sites/sites_switch.php');</pre></p>
       </li>
     </ol>
     <p>Multi Site is now installed and ready to use!</p>
-    <p>Go to the configuration chapter to read more on how to configuer your sites.</p>
+    <p>Go to the configuration chapter to read more on how to configure your sites.</p>
   </div>
   <h2><a name="upgrade" id="upgrade"></a>Upgrade <span style="color: #F00;">( Do a fresh installation)</span></h2>
   <div id="contentDescription" >
-  <p><strong>Upgrading from previous vwersions is not supported</strong> Please do a fresh instaltion</p>
+  <p><strong>Upgrading from previous versions is not supported</strong> Please do a fresh instaltion</p>
+  </div>
+  <h2><a name="configuration" id="configuration"></a>Configuration</h2>
+  <div id="contentDescription">
+  <ol>
+    <li>How to change the configuration for a specific shop?
+      <p>The Zen-cart configuration is contained in the database and declared in constants at runtime. The configuration in the admin section stands for the "default configuration". You can override this configuration by defining the constants of the setting that you want to change directly in the config file related to one of your site (folder "includes/config_sites")</p>
+      <p>You now have to create a config file for each one of your sites! The name of the file has to be: "www.site1.com_config.php" (for the site targeted by the domain name www.site1.com). This file "www.site1.com_config.php" has to contain:</p>
+      <pre name="code" class="php">&lt;?php
+$template_dir = "site1";
+define('SITE_NAME','site1');
+?&gt;</pre>
+      <p>$template_dir is the template that you want to use for this site SITE_NAME is the name of your site (use for the category filter and for the order page in admin; column site).</p>
+      <p>You can add constants for overriding of the default configuration from the database or from the configure.php, the following lines are only exemples:</p>
+      <p>//Do not display the categories at the main page for this site:</p>
+      <pre name="code" class="php">define('SHOW_CATEGORIES_ALWAYS','0');</pre>
+      <p>//Display the categories of ID 5 as the main category of the website:</p>
+      <pre name="code" class="php">define('CATEGORIES_START_MAIN','5');</pre>
+      <p>//Change the Contact us email address:</p>
+      <pre name="code" class="php">define('STORE_OWNER_EMAIL_ADDRESS','an_email@address.com')</pre>
+      <p>//Enable the SSL only for this site:</p>
+      <pre name="code" class="php">define('ENABLE_SSL', 'true'); //assuming as 'false' in configure.php</pre>
+      <p>Remember that the code above is only here as exemple and do not always need to be use.</p>
+      <p>If you don't know what is the name of the constants of a configuration setting, you can find it by clicking in your admin on Tools => Multisite Tools. This brings up the Multisite page. Here you click on the link "Display Configuration for a new site". Now all you constants are shown. You can select and copy them to the new config file </p>
+    </li>
+    <li>Category Filter
+      <p>The MultiSite module works by filtering the categories with the function cat_filter. It only displays the categories that have the name of the site (constant SITE_NAME) in html comment in the categories descriptions. Therefore, you need to add this description to EVERY categories description that have to be display in a shop. Sub categories Included!</p>
+      <p>Example of html comment:</p>
+      <pre name="code" class="html"><!--site1-site2-site3--> Description of a category that will be displayed in site1, site2 and site3.</pre>
+      <p>This comment will allow this category for the shops site1 site2 and site3. the site names HAVE to be separated by "-".<br />
+If you have Lots of categories, it may be quicker to add the categories trough the Multisite tool. Go to Tools =&gt; Multisite Tools, and click &quot;Display the relations Categories/Sites&quot;</p>
+      <p>once you have put your html comments in your categories, they should appear on the front end of your shop. If a category has no html comment, it won't be displayed in any sites.</p>
+    </li>
+  </ol>
   </div>
   <h2><a name="version_history" id="version_history"></a>Version History</h2>
   <div id="contentDescription">
@@ -194,8 +261,6 @@ These folders should be:
   </div>
   <h2><a name="support" id="support"></a>Support</h2>
   <div id="contentDescription">
-    <p>You will find the official support thread at the link below. Please feel free to post any comments or questions there.</p>
-    <p>&nbsp;</p>
+    <p>You will find the official support thread at the link below. Please feel free to post any comments or questions there.</p><a href="http://www.zen-cart.com/showthread.php?63997-MultiSite-Module-Support-Thread">Support thread</a>
   </div>
-
 </div>
