@@ -17,7 +17,9 @@ $categories_tab_query = "select c.categories_id, cd.categories_name from " .
 TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd
                           where c.categories_id=cd.categories_id and c.parent_id= '0' and cd.language_id='" . (int)$_SESSION['languages_id'] . "' and c.categories_status='1'" .
 $order_by;
+// bof Multi site
 $categories_tab = $db->Execute(cat_filter($categories_tab_query));
+// eof Multi site
 
 $links_list = array();
 while (!$categories_tab->EOF) {

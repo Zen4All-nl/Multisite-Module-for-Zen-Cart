@@ -213,7 +213,9 @@
                               from " . TABLE_MANUFACTURERS . " order by manufacturers_name";
     }
 
+// bof Multi site
     $manufacturers = $db->Execute(cat_filter($manufacturers_query));
+// eof Multi site
 
     while (!$manufacturers->EOF) {
       $manufacturers_array[] = array('id' => $manufacturers->fields['manufacturers_id'], 'text' => $manufacturers->fields['manufacturers_name']);
@@ -306,10 +308,10 @@
   function zen_get_products_category_id($products_id) {
     global $db;
 
-    $the_products_category_query = "select products_id, categories_id from " . TABLE_PRODUCTS_TO_CATEGORIES . " where products_id = '" . (int)$products_id . "'" . " order by products_id,categories_id";
+    $the_products_category_query = "select products_id, master_categories_id from " . TABLE_PRODUCTS . " where products_id = '" . (int)$products_id . "'";
     $the_products_category = $db->Execute($the_products_category_query);
 
-    return $the_products_category->fields['categories_id'];
+    return $the_products_category->fields['master_categories_id'];
   }
 
 

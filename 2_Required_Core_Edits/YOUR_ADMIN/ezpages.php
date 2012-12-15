@@ -91,8 +91,9 @@
         $page_is_ssl  = (int)$_POST['page_is_ssl'];
 
         $pages_html_text = zen_db_prepare_input($_POST['pages_html_text']);
+// bof Multi site
         $ezpages_description = zen_db_prepare_input($_POST['ezpages_description']);
-
+// bof Multi site
         $alt_url = zen_db_prepare_input($_POST['alt_url']);
 
         $alt_url_external = zen_db_prepare_input($_POST['alt_url_external']);
@@ -147,8 +148,10 @@
                                   'footer_sort_order' => $pages_footer_sort_order,
                                   'toc_sort_order' => $pages_toc_sort_order,
                                   'toc_chapter' => $toc_chapter,
+// bof Multi site
                                   'pages_html_text' => $pages_html_text,
                                   'ezpages_description' => $ezpages_description);
+// eof Multi site
 
           if ($action == 'insert') {
             zen_db_perform(TABLE_EZPAGES, $sql_data_array);
@@ -258,7 +261,9 @@
                         'page_open_new_window' => '',
                         'page_is_ssl' => '',
                         'pages_html_text' => '',
+// bof Multi site
                         'ezpages_description' => '',
+// eof Multi site
                         'alt_url' => '',
                         'alt_url_external' => '',
                         'header_sort_order' => '',
@@ -426,6 +431,7 @@
                 </td>
               </tr>
 
+<!-- bof Multi site -->
           <tr>
             <td colspan="2"><?php echo zen_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
           </tr>
@@ -436,6 +442,7 @@
                       echo '<br />' . EZPAGE_MULTI_EXPLAIN;
                 ?></td>
           </tr>
+<!-- eof Multi site -->
 
           <tr>
             <td colspan="2"><?php echo zen_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
@@ -637,8 +644,9 @@ while (!$pages->EOF) {
           $contents[] = array('align' => 'left', 'text' => zen_image(DIR_WS_IMAGES . 'icon_status_red.gif', IMAGE_ICON_STATUS_RED_EZPAGES, 10, 10) . ' &nbsp;' . TEXT_WARNING_MULTIPLE_SETTINGS);
         }
 
-
+// bof Multi site
         $contents[] = array('align' => 'left', 'text' => '<br />' . 'Multisite Filter' . (empty($ezInfo->ezpages_description) ? '&nbsp;' . TEXT_NONE : '<br />' . htmlspecialchars($ezInfo->ezpages_description)));
+// eof Multi site
         $contents[] = array('align' => 'left', 'text' => TEXT_ALT_URL . (empty($ezInfo->alt_url) ? '&nbsp;' . TEXT_NONE : '<br />' . $ezInfo->alt_url));
         $contents[] = array('align' => 'left', 'text' => '<br />' . TEXT_ALT_URL_EXTERNAL . (empty($ezInfo->alt_url_external) ? '&nbsp;' . TEXT_NONE : '<br />' . $ezInfo->alt_url_external));
         $contents[] = array('align' => 'left', 'text' => '<br />' . TEXT_PAGES_HTML_TEXT . '<br />' . substr(strip_tags($ezInfo->pages_html_text),0,100));

@@ -28,6 +28,7 @@ class category_tree extends base {
       $master_type = $master_type_result->fields['type_master_type'];
     }
     $this->tree = array();
+// bof Multi site
     if ($product_type == 'all') {
       $categories_query = "select c.categories_id, cd.categories_name, c.parent_id, c.categories_image
                              from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd
@@ -48,6 +49,7 @@ class category_tree extends base {
                              order by sort_order, cd.categories_name";
     }
     $categories = $db->Execute(cat_filter($categories_query), '', true, 150);
+// eof Multi site
     while (!$categories->EOF)  {
       $this->tree[$categories->fields['categories_id']] = array('name' => $categories->fields['categories_name'],
       'parent' => $categories->fields['parent_id'],
@@ -104,7 +106,9 @@ class category_tree extends base {
 
         }
 
+// bof Multi site
         $rows = $db->Execute(cat_filter($categories_query));
+// eof Multi site
 
         if ($rows->RecordCount()>0) {
           $new_path .= $value;
@@ -146,13 +150,17 @@ class category_tree extends base {
     $this->categories_string = "";
 
     for ($i=0; $i<$this->tree[$counter]['level']; $i++) {
+// bof Multi site
       if ($this->tree[$counter]['parent'] != CATEGORIES_ROOT) {
+// eof Multi site
         $this->categories_string .= CATEGORIES_SUBCATEGORIES_INDENT;
       }
     }
 
 
+// bof Multi site
     if ($this->tree[$counter]['parent'] == CATEGORIES_ROOT) {
+// eof Multi site
       $cPath_new = 'cPath=' . $counter;
       $this->box_categories_array[$ii]['top'] = 'true';
     } else {

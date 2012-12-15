@@ -19,7 +19,9 @@ if (EZPAGES_STATUS_FOOTER == '1' or (EZPAGES_STATUS_FOOTER == '2' and (strstr(EX
   if (isset($var_linksList)) {
     unset($var_linksList);
   }
+// bof multi site module
   $page_query = $db->Execute(ezpages_filter("select * from " . TABLE_EZPAGES . " where status_footer = 1 and footer_sort_order > 0 order by footer_sort_order, pages_title"));
+// eof multi site module
   if ($page_query->RecordCount()>0) {
     $rows = 0;
     while (!$page_query->EOF) {

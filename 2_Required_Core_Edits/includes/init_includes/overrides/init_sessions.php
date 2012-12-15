@@ -53,14 +53,14 @@ if (isset($_POST[zen_session_name()])) {
 } elseif ( ($request_type == 'SSL') && isset($_GET[zen_session_name()]) ) {
   zen_session_id($_GET[zen_session_name()]);
 }
-//Multi-Sites - Prioritise the GET variable over the cookie.
+// bof Multi site - Prioritise the GET variable over the cookie.
 elseif(isset($_GET[session_name()])) {
   zen_setcookie(session_name(), $_GET[session_name()], time()+$SESS_LIFE, '/', (zen_not_null($current_domain) ? $current_domain : ''));
   if(isset($_COOKIE[session_name()])&&($_COOKIE[session_name()]!=$_GET[session_name()])) {
     $_COOKIE[session_name()] = $_GET[session_name()];
   }
 }
-//end Multi-Sites
+//eof Multi site
 /**
  * need to tidy up $_SERVER['REMOTE_ADDR'] here beofre we use it any where else
  * one problem we don't address here is if $_SERVER['REMOTE_ADDRESS'] is not set to anything at all

@@ -31,7 +31,9 @@
 
 <fieldset class="floatingBox back">
     <legend><?php echo ENTRY_CATEGORIES; ?></legend>
+<!-- bof multi site module -->
     <div class="floatLeft"><?php echo zen_draw_pull_down_menu('categories_id', zen_get_categories(array(array('id' => '', 'text' => TEXT_ALL_CATEGORIES)), CATEGORIES_ROOT ,'', '1'), $sData['categories_id']); ?></div>
+<!-- eof multi site module -->
 <?php echo zen_draw_checkbox_field('inc_subcat', '1', $sData['inc_subcat'], 'id="inc-subcat"'); ?><label class="checkboxLabel" for="inc-subcat"><?php echo ENTRY_INCLUDE_SUBCATEGORIES; ?></label>
 <br class="clearBoth" />
 </fieldset>

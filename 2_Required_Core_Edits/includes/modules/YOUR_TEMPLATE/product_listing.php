@@ -12,7 +12,9 @@ if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
 }
 $show_submit = zen_run_normal();
+// bof multi site module
 $listing_split = new splitPageResults(cat_filter($listing_sql), MAX_DISPLAY_PRODUCTS_LISTING, 'p.products_id', 'page');
+// eof multi site module
 $zco_notifier->notify('NOTIFY_MODULE_PRODUCT_LISTING_RESULTCOUNT', $listing_split->number_of_rows);
 $how_many = 0;
 

@@ -31,7 +31,7 @@
     $orders_status->MoveNext();
   }
 
-  // prepare order-sites pulldown list
+// bof Multi site prepare order-sites pulldown list
   $orders_sites = array();
   $orders_site_array = array();
   $orders_site = $db->Execute("SELECT order_site
@@ -44,6 +44,7 @@
     $orders_site_array[$orders_site->fields['order_site']] = $orders_site->fields['order_site'];
     $orders_site->MoveNext();
   }
+// eof Multi site
   $action = (isset($_GET['action']) ? $_GET['action'] : '');
   $order_exists = false;
   if (isset($_GET['oID']) && trim($_GET['oID']) == '') unset($_GET['oID']);
@@ -814,13 +815,14 @@ function couponpopupWindow(url) {
     $new_fields = ", o.customers_company, o.customers_email_address, o.customers_street_address, o.delivery_company, o.delivery_name, o.delivery_street_address, o.billing_company, o.billing_name, o.billing_street_address, o.payment_module_code, o.shipping_module_code, o.ip_address ";
 ?>
 <?php
+// bof Multi site
     $new_fields = ", o.customers_company, o.customers_email_address, o.customers_street_address, o.delivery_company, o.delivery_name, o.delivery_street_address, o.billing_company, o.billing_name, o.billing_street_address, o.payment_module_code, o.shipping_module_code, o.ip_address ";
-    //Multi-site: add site_name
+//Multi site: add site_name
     $new_fields .= ", o.order_site ";
     if(isset($_GET['site'])&&($_GET['site']!='')){
       $search .= " and order_site='".zen_db_prepare_input($_GET['site'])."'";
     }
-    //end Multi-site
+// eof Multi site
     if (isset($_GET['cID'])) {
       $cID = zen_db_prepare_input($_GET['cID']);
       $orders_query_raw =   "select o.orders_id, o.customers_id, o.customers_name, o.payment_method, o.shipping_method, o.date_purchased, o.last_modified, o.currency, o.currency_value, s.orders_status_name, ot.text as order_total" .

@@ -20,11 +20,13 @@ if (!isset($robotsNoIndex)) $robotsNoIndex = false;
 // might need isset($_GET['cPath']) later ... right now need $cPath or breaks breadcrumb from sidebox etc.
 if (isset($cPath_array) && isset($cPath)) {
   for ($i=0, $n=sizeof($cPath_array); $i<$n; $i++) {
+// bof Multi site
     $categories_query = "select categories_name
                            from " . TABLE_CATEGORIES_DESCRIPTION . "
                            where categories_id = '" . (int)$cPath_array[$i] . "'
                            and categories_id!='".CATEGORIES_ROOT."'
                            and language_id = '" . (int)$_SESSION['languages_id'] . "'";
+// bof Multi site
 
     $categories = $db->Execute($categories_query);
 //echo 'I SEE ' . (int)$cPath_array[$i] . '<br>';

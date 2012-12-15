@@ -31,7 +31,9 @@ if (zen_not_null($cPath)) {
   $cPath = implode('_', $cPath_array);
   $current_category_id = $cPath_array[(sizeof($cPath_array)-1)];
 } else {
+// bof Multi site
   $current_category_id = CATEGORIES_ROOT;
+// eof Multi site
   $cPath_array = array();
 }
 

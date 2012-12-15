@@ -27,8 +27,10 @@ $meta_tags_over_ride = false;
 if (!defined('METATAGS_DIVIDER')) define('METATAGS_DIVIDER', ', ');
 
 // Get all top category names for use with web site keywords
+// bof multi site module
 $sql = "select cd.categories_name from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where c.parent_id = ".CATEGORIES_ROOT." and c.categories_id = cd.categories_id and cd.language_id='" . (int)$_SESSION['languages_id'] . "' and c.categories_status=1";
 $keywords_metatags = $db->Execute(cat_filter($sql));
+// eof multi site module
 while (!$keywords_metatags->EOF) {
   $keywords_string_metatags .= zen_clean_html($keywords_metatags->fields['categories_name']) . METATAGS_DIVIDER;
   $keywords_metatags->MoveNext();
@@ -101,7 +103,9 @@ switch ($_GET['main_page']) {
     // eof: categories meta tags
     if ($category_depth == 'nested') {
       $sql = "select cd.categories_name from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd where c.categories_id = cd.categories_id and cd.categories_id = '" . (int)$current_category_id . "' and cd.language_id = '" . (int)$_SESSION['languages_id'] . "' and c.categories_status=1";
+// bof multi site module
       $category_metatags = $db->Execute(cat_filter($sql));
+// bof multi site module
       if ($category_metatags->EOF) {
         $meta_tags_over_ride = true;
       } else {
@@ -127,7 +131,9 @@ switch ($_GET['main_page']) {
         } // EOF
       } else {
         $sql = "select cd.categories_name from " . TABLE_CATEGORIES . ' c, ' . TABLE_CATEGORIES_DESCRIPTION . " cd where c.categories_id = cd.categories_id and cd.categories_id = '" . (int)$current_category_id . "' and cd.language_id = '" . (int)$_SESSION['languages_id'] . "' and c.categories_status=1";
+// bof multi site module
         $category_metatags = $db->Execute(cat_filter($sql));
+// bof multi site module
         if ($category_metatags->EOF) {
           $meta_tags_over_ride = true;
         } else {

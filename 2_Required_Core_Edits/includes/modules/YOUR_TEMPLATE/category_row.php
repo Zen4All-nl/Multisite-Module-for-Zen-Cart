@@ -32,8 +32,9 @@ if ($num_categories > 0) {
     $cPath_new = zen_get_path($categories->fields['categories_id']);
 
     // strip out 0_ from top level cats
+// bof multi site module
     $cPath_new = str_replace('='.CATEGORIES_ROOT.'_', '=', $cPath_new);
-
+// eof multi site module
     //    $categories->fields['products_name'] = zen_get_products_name($categories->fields['products_id']);
 
     $list_box_contents[$row][$col] = array('params' => 'class="categoryListBoxContents"' . ' ' . 'style="width:' . $col_width . '%;"',

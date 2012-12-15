@@ -641,9 +641,9 @@ class order extends base {
                             'ip_address' => $_SESSION['customers_ip_address'] . ' - ' . $_SERVER['REMOTE_ADDR']
                             );
 
-//Multisite Module - Add the order_site in the order table
+// bof Multi site Module - Add the order_site in the order table
 $sql_data_array['order_site']=ORDER_SITE;
-//eof Multisite Module
+// eof Multi site Module
 
     zen_db_perform(TABLE_ORDERS, $sql_data_array);
 

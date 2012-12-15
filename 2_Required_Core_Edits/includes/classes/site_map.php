@@ -17,7 +17,9 @@ if (!defined('IS_ADMIN_FLAG')) {
  * @package general
  */
  class zen_SiteMapTree {
+// bof Multi site
    var $root_category_id = CATEGORIES_ROOT,
+// bof Multi site
        $max_level = 0,
        $data = array(),
        $root_start_string = '',
@@ -40,7 +42,9 @@ if (!defined('IS_ADMIN_FLAG')) {
                       and cd.language_id = '" . (int)$_SESSION['languages_id'] . "'
                       and c.categories_status != '0'
                       order by c.parent_id, c.sort_order, cd.categories_name";
+// bof Multi site
          $categories = $db->Execute(cat_filter($categories_query));
+// bof Multi site
          while (!$categories->EOF) {
            $this->data[$categories->fields['parent_id']][$categories->fields['categories_id']] = array('name' => $categories->fields['categories_name'], 'count' => 0);
            $categories->MoveNext();

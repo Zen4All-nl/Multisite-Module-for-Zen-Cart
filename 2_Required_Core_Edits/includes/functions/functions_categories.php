@@ -112,7 +112,9 @@
   }
 
 ////
+// bof Multi site
   function zen_get_categories($categories_array = '', $parent_id = CATEGORIES_ROOT, $indent = '', $status_setting = '') {
+// eof Multi site
     global $db;
 
     if (!is_array($categories_array)) $categories_array = array();
@@ -132,7 +134,9 @@
                          and cd.language_id = '" . (int)$_SESSION['languages_id'] . "'
                          order by sort_order, cd.categories_name";
 
+// bof Multi site
     $categories = $db->Execute(cat_filter($categories_query));
+// eof Multi site
 
     while (!$categories->EOF) {
       $categories_array[] = array('id' => $categories->fields['categories_id'],
@@ -180,7 +184,9 @@
     $parent_categories = $db->Execute($parent_categories_query);
 
     while (!$parent_categories->EOF) {
+// bof Multi site
       if ($parent_categories->fields['parent_id'] == CATEGORIES_ROOT) return true;
+// eof Multi site
       $categories[sizeof($categories)] = $parent_categories->fields['parent_id'];
       if ($parent_categories->fields['parent_id'] != $categories_id) {
         zen_get_parent_categories($categories, $parent_categories->fields['parent_id']);
@@ -196,25 +202,26 @@
     global $db;
     $cPath = '';
 
-    $category_query = "select p2c.categories_id
-                       from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_TO_CATEGORIES . " p2c
-                       where p.products_id = '" . (int)$products_id . "'
-                       and p.products_status = '1'
-                       and p.products_id = p2c.products_id limit 1";
+    $category_query = "select p.products_id, p.master_categories_id
+                       from " . TABLE_PRODUCTS . " p
+                       where p.products_id = '" . (int)$products_id . "' limit 1";
 
+
+// eof Multi site
     $category = $db->Execute(cat_filter($category_query));
+// bof Multi site
 
     if ($category->RecordCount() > 0) {
 
       $categories = array();
-      zen_get_parent_categories($categories, $category->fields['categories_id']);
+      zen_get_parent_categories($categories, $category->fields['master_categories_id']);
 
       $categories = array_reverse($categories);
 
       $cPath = implode('_', $categories);
 
       if (zen_not_null($cPath)) $cPath .= '_';
-      $cPath .= $category->fields['categories_id'];
+      $cPath .= $category->fields['master_categories_id'];
     }
 
     return $cPath;
