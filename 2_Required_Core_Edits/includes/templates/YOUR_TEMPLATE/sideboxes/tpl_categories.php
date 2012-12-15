@@ -74,15 +74,19 @@
 //      $display_limit = zen_get_products_new_timelimit();
       $display_limit = zen_get_new_date_range();
 
+// bof multi site module
       $show_this = $db->Execute(cat_filter("select p.products_id
                                  from " . TABLE_PRODUCTS . " p
                                  where p.products_status = 1 " . $display_limit . " limit 1"));
+// eof multi site module
       if ($show_this->RecordCount() > 0) {
         $content .= '<a class="category-links" href="' . zen_href_link(FILENAME_PRODUCTS_NEW) . '">' . CATEGORIES_BOX_HEADING_WHATS_NEW . '</a>' . '<br />' . "\n";
       }
     }
     if (SHOW_CATEGORIES_BOX_FEATURED_PRODUCTS == 'true') {
+// bof multi site module
       $show_this = $db->Execute(cat_filter("select products_id from " . TABLE_FEATURED . " where status= 1 limit 1"));
+// eof multi site module
       if ($show_this->RecordCount() > 0) {
         $content .= '<a class="category-links" href="' . zen_href_link(FILENAME_FEATURED_PRODUCTS) . '">' . CATEGORIES_BOX_HEADING_FEATURED_PRODUCTS . '</a>' . '<br />' . "\n";
       }
