@@ -26,7 +26,9 @@
 
     // randomly select ONE featured product from the list retrieved:
     //$random_featured_product = zen_random_select($random_featured_products_query);
+// bof Multi site
     $random_featured_product = $db->ExecuteRandomMulti(cat_filter($random_featured_products_query), MAX_RANDOM_SELECT_FEATURED_PRODUCTS);
+// eof Multi site
 
     if ($random_featured_product->RecordCount() > 0)  {
       require($template->get_template_dir('tpl_featured.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes'). '/tpl_featured.php');

@@ -33,7 +33,9 @@
                              and s.status = 1";
 
 //    $random_specials_sidebox_product = zen_random_select($random_specials_sidebox_product_query);
+// bof Multi site
     $random_specials_sidebox_product = $db->ExecuteRandomMulti(cat_filter($random_specials_sidebox_product_query), MAX_RANDOM_SELECT_SPECIALS);
+// eof Multi site
 
     if ($random_specials_sidebox_product->RecordCount() > 0)  {
       require($template->get_template_dir('tpl_specials.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes'). '/tpl_specials.php');

@@ -21,7 +21,9 @@ if (MAX_DISPLAY_SPECIAL_PRODUCTS > 0 ) {
                          ORDER BY s.specials_date_added DESC";
 
   $specials_query_raw = $db->bindVars($specials_query_raw, ':languagesID', $_SESSION['languages_id'], 'integer');
+// bof Multi site
   $specials_split = new splitPageResults(cat_filter($specials_query_raw), MAX_DISPLAY_SPECIAL_PRODUCTS);
+// eof Multi site
   $specials = $db->Execute($specials_split->sql_query);
   $row = 0;
   $col = 0;

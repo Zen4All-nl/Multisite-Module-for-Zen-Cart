@@ -32,7 +32,9 @@
                              AND pd.language_id = :languageID " . $display_limit . $order_by;
 
   $products_new_query_raw = $db->bindVars($products_new_query_raw, ':languageID', $_SESSION['languages_id'], 'integer');
+// bof Multi site
   $products_new_split = new splitPageResults(cat_filter($products_new_query_raw), MAX_DISPLAY_PRODUCTS_NEW);
+// eof Multi site
 
 //check to see if we are in normal mode ... not showcase, not maintenance, etc
   $show_submit = zen_run_normal();
@@ -41,7 +43,9 @@
   if (PRODUCT_NEW_LISTING_MULTIPLE_ADD_TO_CART > 0 and $show_submit == true and $products_new_split->number_of_rows > 0) {
 
     // check how many rows
+// bof Multi site
     $check_products_all = $db->Execute(cat_filter($products_new_split->sql_query));
+// eof Multi site
     $how_many = 0;
     while (!$check_products_all->EOF) {
       if (zen_has_product_attributes($check_products_all->fields['products_id'])) {

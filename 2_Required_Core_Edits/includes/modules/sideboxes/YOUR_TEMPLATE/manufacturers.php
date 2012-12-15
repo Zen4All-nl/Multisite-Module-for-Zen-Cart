@@ -36,7 +36,9 @@ if ($show_manufacturers) {
                             order by manufacturers_name";
   }
 
+// bof Multi site
   $manufacturer_sidebox = $db->Execute(cat_filter($manufacturer_sidebox_query));
+// eof Multi site
 
   if ($manufacturer_sidebox->RecordCount()>0) {
     $number_of_rows = $manufacturer_sidebox->RecordCount()+1;

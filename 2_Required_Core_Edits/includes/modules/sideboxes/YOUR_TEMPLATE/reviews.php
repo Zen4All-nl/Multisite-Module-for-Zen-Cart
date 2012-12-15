@@ -27,8 +27,10 @@
   if (isset($_GET['products_id'])) {
     $random_review_sidebox_select .= " and p.products_id = '" . (int)$_GET['products_id'] . "'";
   }
-  $random_review_sidebox_select .= " limit " . MAX_RANDOM_SELECT_REVIEWS;
+
+// bof Multi site
   $random_review_sidebox_product = $db->ExecuteRandomMulti(cat_filter($random_review_sidebox_select), MAX_RANDOM_SELECT_REVIEWS);
+// eof Multi site
   if ($random_review_sidebox_product->RecordCount() > 0) {
     require($template->get_template_dir('tpl_reviews_random.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes'). '/tpl_reviews_random.php');
   } elseif (isset($_GET['products_id']) and zen_products_id_valid($_GET['products_id'])) {

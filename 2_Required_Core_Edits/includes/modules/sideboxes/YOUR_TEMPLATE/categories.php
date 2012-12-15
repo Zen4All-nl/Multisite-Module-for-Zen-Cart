@@ -14,7 +14,9 @@
     $box_categories_array = array();
 
 // don't build a tree when no categories
+// bof Multi site
     $check_categories = $db->Execute(cat_filter("select categories_id from " . TABLE_CATEGORIES . " where categories_status=1 limit 1"));
+// eof Multi site
     if ($check_categories->RecordCount() > 0) {
       $box_categories_array = $main_category_tree->zen_category_tree();
     }

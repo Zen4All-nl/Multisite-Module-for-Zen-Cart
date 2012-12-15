@@ -16,7 +16,9 @@
     if (isset($var_linksList)) {
       unset($var_linksList);
     }
+// bof Multi site
     $page_query = $db->Execute(ezpages_filter("select * from " . TABLE_EZPAGES . " where status_sidebox = 1 and sidebox_sort_order > 0 order by sidebox_sort_order, pages_title"));
+// eof Multi site
     if ($page_query->RecordCount()>0) {
       $title =  BOX_HEADING_EZPAGES;
       $box_id =  'ezpages';

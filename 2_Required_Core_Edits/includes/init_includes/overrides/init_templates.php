@@ -20,7 +20,7 @@
 /*
  * Determine the active template name
  */
-/*
+/* bof Multi site
   $template_dir = "";
   $sql = "select template_dir
             from " . TABLE_TEMPLATE_SELECT . "
@@ -35,7 +35,8 @@
   if ($template_query->RecordCount() > 0) {
     $template_dir = $template_query->fields['template_dir'];
   }
-*/
+ eof Multi site */
+
 /**
  * The actual template directory to use
  */

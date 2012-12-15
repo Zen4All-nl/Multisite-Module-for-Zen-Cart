@@ -21,7 +21,9 @@
                            and p.products_status = 1 " . $display_limit;
 
 //  $random_whats_new_sidebox_product = zen_random_select($random_whats_new_sidebox_product_query);
+// bof Multi site
   $random_whats_new_sidebox_product = $db->ExecuteRandomMulti(cat_filter($random_whats_new_sidebox_product_query), MAX_RANDOM_SELECT_NEW);
+// eof Multi site
 
   if ($random_whats_new_sidebox_product->RecordCount() > 0 ) {
     require($template->get_template_dir('tpl_whats_new.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes'). '/tpl_whats_new.php');

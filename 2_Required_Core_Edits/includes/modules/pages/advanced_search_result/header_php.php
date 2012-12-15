@@ -272,7 +272,9 @@ if (isset($_GET['categories_id']) && zen_not_null($_GET['categories_id'])) {
     if (sizeof($subcategories_array) > 0) {
       $where_str .= " OR p2c.categories_id in (";
       for ($i=0, $n=sizeof($subcategories_array); $i<$n; $i++ ) {
+// bof Multi site
         $where_str .= " OR p2c.categories_id = :categoriesID";
+// eof Multi site
         if ($i+1 < $n) $where_str .= ",";
         $where_str = $db->bindVars($where_str, ':categoriesID', $subcategories_array[$i], 'integer');
       }
@@ -451,7 +453,9 @@ if ((!isset($_GET['sort'])) || (!preg_match('/[1-8][ad]/', $_GET['sort'])) || (s
 }
 //$_GET['keyword'] = zen_output_string_protected($_GET['keyword']);
 
+// bof Multi site
 $listing_sql = cat_filter($select_str . $from_str . $where_str . $order_str);
+// eof Multi site
 // Notifier Point
 $zco_notifier->notify('NOTIFY_SEARCH_ORDERBY_STRING', $listing_sql);
 $breadcrumb->add(NAVBAR_TITLE_1, zen_href_link(FILENAME_ADVANCED_SEARCH));

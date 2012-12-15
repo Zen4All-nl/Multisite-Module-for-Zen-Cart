@@ -118,7 +118,9 @@ if ($category_depth == 'nested')
     $categories_query = $db->bindVars($categories_query, ':parentID', $current_category_id, 'integer');
     $categories_query = $db->bindVars($categories_query, ':languagesID', $_SESSION['languages_id'], 'integer');
   }
+// bof Multi site
   $categories = $db->Execute(cat_filter($categories_query));
+// eof Multi site
   $number_of_categories = $categories->RecordCount();
   $new_products_category_id = $current_category_id;
 
@@ -212,9 +214,9 @@ $sql = $db->bindVars($sql, ':languagesID', $_SESSION['languages_id'], 'integer')
 $categories_description_lookup = $db->Execute($sql);
 if ($categories_description_lookup->RecordCount() > 0) {
   $current_categories_description = $categories_description_lookup->fields['categories_description'];
-  //Multisite Module - Remove html comment from categories_description
+// bof Multi site - Remove html comment from categories_description
   $current_categories_description = preg_replace('/<!--(.|\s)*?-->/', '', $current_categories_description);
-  //eof Multisite Module
+// eof Multi site
 }
 
 require($template->get_template_dir($tpl_page_body, DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . $tpl_page_body);

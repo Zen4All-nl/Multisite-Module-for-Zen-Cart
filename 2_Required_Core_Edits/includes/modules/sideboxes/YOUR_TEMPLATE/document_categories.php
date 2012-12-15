@@ -14,7 +14,9 @@
     $box_categories_array = array();
 
 // don't build a tree when no categories
+// bof Multi site
     $check_categories = $db->Execute(cat_filter("select c.categories_id from " . TABLE_CATEGORIES . " c, " . TABLE_PRODUCT_TYPES . " pt, " . TABLE_PRODUCT_TYPES_TO_CATEGORY . " ptc where pt.type_master_type = 3 and ptc.product_type_id = pt.type_id and c.categories_id = ptc.category_id and c.categories_status=1 limit 1"));
+// eof Multi site
     if ($check_categories->RecordCount() > 0) {
       $box_categories_array = $main_category_tree->zen_category_tree(3);
       require($template->get_template_dir('tpl_document_categories.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes'). '/tpl_document_categories.php');

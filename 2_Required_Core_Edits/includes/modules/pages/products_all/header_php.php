@@ -30,7 +30,9 @@
                              AND p.products_id = pd.products_id
                              AND pd.language_id = :languageID " . $order_by;
 
+// bof Multi site
   $products_all_query_raw = $db->bindVars(cat_filter($products_all_query_raw), ':languageID', $_SESSION['languages_id'], 'integer');
+// eof Multi site
   $products_all_split = new splitPageResults($products_all_query_raw, MAX_DISPLAY_PRODUCTS_ALL);
 
 //check to see if we are in normal mode ... not showcase, not maintenance, etc

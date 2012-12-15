@@ -26,7 +26,9 @@ $reviews_query_raw = "SELECT r.reviews_id, left(rd.reviews_text, 100) AS reviews
 
 $reviews_query_raw = $db->bindVars($reviews_query_raw, ':languageID', $_SESSION['languages_id'], 'integer');
 $reviews_query_raw = $db->bindVars($reviews_query_raw, ':languageID', $_SESSION['languages_id'], 'integer');
+// bof Multi site
 $reviews_split = new splitPageResults(cat_filter($reviews_query_raw), MAX_DISPLAY_NEW_REVIEWS);
+// eof Multi site
 
 $breadcrumb->add(NAVBAR_TITLE);
 ?>
