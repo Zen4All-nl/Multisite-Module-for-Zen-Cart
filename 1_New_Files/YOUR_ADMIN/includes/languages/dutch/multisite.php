@@ -16,6 +16,3 @@ define('MULTISITE_CATEGORIE_REMINDER_TEXT','(vergeet niet om op te slaan)');
 define('MULTISITE_CATEGORIE_ALL_TEXT','Alles');
 define('MULTISITE_CATEGORIE','Categorieën');
 define('MULTISITE_SITE','sites');
-
-define('EZPAGE_MULTI_FILTER','Multisite Filter');
-define('EZPAGE_MULTI_EXPLAIN','Zie Multisite Notes, Geef de sites op als &lt;!--Sitenaam 1-Sitenaam--&gt;');
