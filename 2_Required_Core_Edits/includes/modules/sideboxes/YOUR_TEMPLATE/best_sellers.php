@@ -31,7 +31,7 @@
 
   if ($show_best_sellers == true) {
     $limit = (trim(MAX_DISPLAY_BESTSELLERS) == "") ? "" : " LIMIT " . (int)MAX_DISPLAY_BESTSELLERS;
-    if (isset($current_category_id) && ($current_category_id > 0)) {
+  	if (isset($current_category_id) && ($current_category_id > 0)) {
       $best_sellers_query = "select distinct p.products_id, pd.products_name, p.products_ordered
                              from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, "
                                     . TABLE_PRODUCTS_TO_CATEGORIES . " p2c, " . TABLE_CATEGORIES . " c
@@ -44,9 +44,7 @@
                              and '" . (int)$current_category_id . "' in (c.categories_id, c.parent_id)
                              order by p.products_ordered desc, pd.products_name";
 
-// bof Multi site
-      cat_filter($best_sellers_query) .= $limit;
-// eof Multi site
+      $best_sellers_query .= $limit;
       $best_sellers = $db->Execute(cat_filter($best_sellers_query));
     } else {
       $best_sellers_query = "select distinct p.products_id, pd.products_name, p.products_ordered
@@ -57,11 +55,11 @@
                              and pd.language_id = '" . (int)$_SESSION['languages_id'] . "'
                              order by p.products_ordered desc, pd.products_name";
 
+      $best_sellers_query .= $limit;
 // bof Multi site
-      cat_filter($best_sellers_query) .= $limit;
       $best_sellers = $db->Execute(cat_filter($best_sellers_query));
 // eof Multi site
-    }
+      }
 if ($best_sellers->RecordCount() >= MIN_DISPLAY_BESTSELLERS) {
       $title =  BOX_HEADING_BESTSELLERS;
       $box_id =  'bestsellers';
