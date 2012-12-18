@@ -64,8 +64,10 @@
       $content .= '<hr id="catBoxDivider" />' . "\n";
     }
     if (SHOW_CATEGORIES_BOX_SPECIALS == 'true') {
-      $show_this = $db->Execute("select s.products_id from " . TABLE_SPECIALS . " s where s.status= 1 limit 1");
-      if ($show_this->RecordCount() > 0) {
+// bof multi site module
+    $show_this = $db->Execute(cat_filter("select s.products_id from " . TABLE_SPECIALS . " s where s.status= 1 limit 1"));
+// eof multi site module
+    if ($show_this->RecordCount() > 0) {
         $content .= '<a class="category-links" href="' . zen_href_link(FILENAME_SPECIALS) . '">' . CATEGORIES_BOX_HEADING_SPECIALS . '</a>' . '<br />' . "\n";
       }
     }
