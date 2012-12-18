@@ -278,6 +278,19 @@ define('SITE_NAME','site1');
 If you have Lots of categories, it may be quicker to add the categories trough the Multisite tool. Go to Tools =&gt; Multisite Tools, and click &quot;Display the relations Categories/Sites&quot;</p><a href="Multisite_Category_Configuration_ScreenShot_01.jpg" target="new" style="text-align:center"><img src="Multisite_Category_Configuration_ScreenShot_01.jpg" width="303" height="390" /><br />Click to enlarge</a>
       <p>once you have put your html comments in your categories, they should appear on the front end of your shop. If a category has no html comment, it won't be displayed in any sites.</p>
     </li>
+    <li>Site Links
+      <p>If you want to allow the shoppers to have a cross-sites cart (orders products from different websites in the same cart), You have to display the sidebox called "site_links.php" and you have to add the sites that you want to be link by editing the file "includes\modules\sideboxes\site_links.php".</p>
+      <p>In this file, you have to add as many add_site_link(...); as you want of site links.</p>
+      <p>Example:</p>
+      <pre name="code" class="php">add_site_link('Shop Site1','http://www.site1.com');
+add_site_link('Shop Site2','http://www.site2.com');</pre>
+      <p>This works too:</p>
+      <pre name="code" class="php">add_site_link('www.site1.com');
+add_site_link('www.site2.com');</pre>
+      <p>PS: these shops Should be Your multi-sites. You can also add some other sites there but the crosssite cart won't work (and so might confused the shoppers ...)<p>
+      <pre name="code" class="php">add_site_link('Zen Cart','http://www.zen-cart.com',false);</pre>
+      <p>By adding false as third parameter (false), it won't add the zenid to the link. It can be use either for a shop in the same domain (cookie will work for it) or an external link (cross-site cart won't work anyway....)</p>
+    </li>
   </ol>
   </div>
   <h2><a name="version_history" id="version_history"></a>Version History</h2>
