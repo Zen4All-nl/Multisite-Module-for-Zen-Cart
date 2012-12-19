@@ -56,7 +56,7 @@ h2{
   <h2><a name="introduction" id="introduction"></a>Introduction</h2>
   <div id="contentDescription">
     <p>This contribution Multi Site support to Zen Cart.</p>
-    <p>Credit is due to <a href="http://www.medea.co.uk/" target="_blank">Gerome Romey</a> for creating Multi Site 0.4, <a href="http://www.gjbenterprises.com/" target="_blank">Gordon Bunker</a> for his work on the ez-page filter module for multi sites, and the <a href="http://www.zen-cart.com/index.php" target="_blank">Zen Cart Team</a> for creating the best open source ecommerce package available!</p>
+    <p>Credit is due to <a href="http://www.medea.co.uk/" target="_blank">Gerome Romey</a> for creating Multi Site 0.4 and the <a href="http://www.zen-cart.com/index.php" target="_blank">Zen Cart Team</a> for creating the best open source ecommerce package available!</p>
   </div>
   <h2><a name="whats_new" id="whats_new"></a>What's New</h2>
   <div id="contentDescription">
@@ -83,9 +83,8 @@ h2{
         <br />
       </li>
       <li>Open the <strong>4_SQL_Files</strong> folder and then open the install.sql file in a text editor (not microsoft word) and copy all of the text to the clipboard. Next go to (Admin &gt; Tools &gt; Install SQL Patches) in your Zen Cart admin and paste the contents of install.sql into the text area and then press the send button. Or copy the code from below<br />
-      <pre name="code" class="sql">ALTER TABLE orders ADD order_site varchar(30) NOT NULL DEFAULT 'no';
-ALTER TABLE ezpages ADD ezpages_description TEXT;</pre>
-        This adds the column 'order_site' to the 'Orders' Table to know which site orders originate from, and the column 'ezpages_description' to the 'ezpages' Table for ez page filtering.
+      <pre name="code" class="sql">ALTER TABLE orders ADD order_site varchar(30) NOT NULL DEFAULT 'no';</pre>
+        This adds the column 'order_site' to the 'Orders' Table to know which site orders originate from.
         <br />
       </li>
       <li><span style="color:#900"><b>Alternative to step 3.</b></span> Open phpMyAdmin for your site and navigate to your database. Choose 'Import' and then 'choose file' and navigate to and select install.sql then choose 'Go'.<br /><br />
@@ -122,7 +121,6 @@ ALTER TABLE ezpages ADD ezpages_description TEXT;</pre>
           <li>includes/config_sites/sites_switch.php</li>
           <li>includes/config_sites/www.example.com_config.php <span style="color:red;font-size:smaller;">(This is only an example config file)</span></li>
           <li>includes/functions/extra_functions/cat_filter.php</li>
-          <li>includes/functions/extra_functions/ezpages_filter.php</li>
           <li>includes/languages/dutch/extra_definitions/site_links.php</li>
           <li>includes/languages/english/extra_definitions/site_links.php</li>
           <li>includes/modules/sideboxes/site_links.php</li>
