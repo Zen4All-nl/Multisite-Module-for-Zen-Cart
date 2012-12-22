@@ -24,9 +24,9 @@
     <ul>
     <li>Updated most files to contain the code of Zen Cart 1.5.1</li>
     <li>Added the admin module registration for Zen Cart 1.5.x</li>
-    <li>The module is now multi lingual on the admin side as well as the Frontend</li>
+    <li>The module is now multilingual on the admin side as well as the Frontend</li>
     <li>The sitelink sidebox has its own tpl file</li>
-    <li>Added SyntaxHightlighter 1.5.1 to multisite.php for easier reading and copiyng code</li>
+    <li>Added SyntaxHightlighter 1.5.1 to multisite.php for easier reading and copying code</li>
     </ul>
   </div>
   <h2><a name="installation" id="installation"></a>Installation</h2>
