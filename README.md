@@ -1,5 +1,5 @@
 <div id="contentWrapper">
-  <h1>Multi Site Module v1.0 <b>Alpha</b> for ZC 1.5.1 Documentation</h1>
+  <h1>Multi Site Module v1.0 Alpha for ZC 1.5.1 Documentation</h1>
   <div id="contentMenu">
     <ul>
       <li><a href="#introduction">Introduction</a></li>
@@ -16,16 +16,16 @@
   <h2><a name="introduction" id="introduction"></a>Introduction</h2>
   <div id="contentDescription">
     <p>This contribution Multi Site support to Zen Cart.</p>
-    <p>Credit is due to <a href="http://www.medea.co.uk/" target="_blank">Gerome Romey</a> for creating Multi Site 0.4, and the <a href="http://www.zen-cart.com/index.php" target="_blank">Zen Cart Team</a> for creating the best open source ecommerce package available!</p>
+    <p>Credit is due to <a href="http://www.medea.co.uk/" target="_blank">Gerome Romey</a> for creating Multi Site 0.4 and the <a href="http://www.zen-cart.com/index.php" target="_blank">Zen Cart Team</a> for creating the best open source ecommerce package available!</p>
   </div>
   <h2><a name="whats_new" id="whats_new"></a>What's New</h2>
   <div id="contentDescription">
-    <p>Version 1.0 - Release Date: 2012-xx-xx</p>
+    <p>Version 1.0 - Release Date: 2013-01-21</p>
     <ul>
     <li>Updated most files to contain the code of Zen Cart 1.5.1</li>
     <li>Added the admin module registration for Zen Cart 1.5.x</li>
-    <li>The module is now multilingual on the admin side as well as the Frontend</li>
-    <li>The sitelink sidebox has its own tpl file</li>
+    <li>The module is now multilingual on the admin side as well as the front-end</li>
+    <li>The site-link side-box has its own tpl file</li>
     <li>Added SyntaxHightlighter 1.5.1 to multisite.php for easier reading and copying code</li>
     </ul>
   </div>
@@ -35,15 +35,15 @@
 <p>Please remember to <strong>backup your website files and database</strong> before you continue.</p>
     <p>To install Multi Site follow the steps below.</p>
     <ol>
-      <li>Download the latest version of Multi Site from <span style="color:red;font-size:smaller;">(this link will be edited when the final release is on zen-cart.com)</span>:<br />
-        <a href="https://github.com/Zen4All/Zen-Cart-Multisite-Module/archive/master.zip" target="_blank">https://github.com/Zen4All/Zen-Cart-Multisite-Module/archive/master.zip<br />
+      <li>Download the latest version of Multi Site from:<br />
+        <a href="http://www.zen-cart.com/downloads.php?do=file&id=378" target="_blank">http://www.zen-cart.com/downloads.php?do=file&id=378<br />
         <br />
         </a></li>
       <li>Extract the contents  (of master.zip) to a temporary location, keeping the file structure intact. (Note: If you can't open this file try using <a href="http://www.7-zip.org/" target="_blank">7-Zip</a>, it's free!)<br />
         <br />
       </li>
-      <li>Open the <strong>4_SQL_Files</strong> folder and then open the install.sql file in a text editor (not microsoft word) and copy all of the text to the clipboard. Next go to (Admin &gt; Tools &gt; Install SQL Patches) in your Zen Cart admin and paste the contents of install.sql into the text area and then press the send button. Or copy the code from below<br />
-      <pre name="code" class="sql">ALTER TABLE orders ADD order_site varchar(30) NOT NULL DEFAULT 'no';</pre>
+      <li>Open the <strong>4_SQL_Files</strong> folder and then open the install.sql file in a text editor (not Microsoft word) and copy all of the text to the clipboard. Next go to (Admin &gt; Tools &gt; Install SQL Patches) in your Zen Cart admin and paste the contents of install.sql into the text area and then press the send button. Or copy the code from below<br />
+      <pre name="code" class="sql:nogutter">ALTER TABLE orders ADD order_site varchar(30) NOT NULL DEFAULT 'no';</pre>
         This adds the column 'order_site' to the 'Orders' Table to know which site orders originate from.
         <br />
       </li>
@@ -77,7 +77,7 @@
           <li>YOUR_ADMIN/includes/shCore.js</li>
           <li>YOUR_ADMIN/includes/SyntaxHighlighter.css</li>
           <li>includes/config_sites/2fastshoes.com_config.php <span style="color:red;font-size:smaller;">(This is only an example config file)</span></li>
-          <li>includes/config_sites/help.txt</li>
+          <li>includes/config_sites/help.txt <span style="color:red;font-size:smaller;">(It is not required to copy this file)</span></li>
           <li>includes/config_sites/sites_switch.php</li>
           <li>includes/config_sites/www.example.com_config.php <span style="color:red;font-size:smaller;">(This is only an example config file)</span></li>
           <li>includes/functions/extra_functions/cat_filter.php</li>
@@ -91,18 +91,18 @@
       <li>Open the<strong> 2_Required_Core_Edits</strong> folder.<br />
         <br />
       </li>
-      <li>Rename the following folder to match your admin folder name.
+<li>Rename the following folder to match your admin folder name.
         <br />
         <ul>
           <li><strong>YOUR_ADMIN</strong></li>
         </ul><br />
       </li>
-      <li>Before we proceed there are a couple of things to note. The files in the '2_Required_Core_Edits' folder are of two types. The first type of file CANNOT be over-ridden by the use of templates, the second type is of course the opposite and CAN be overridden by the use of Zen-Cart templates. You can read more about Zen-Cart templates on the Zen-Cart website. Thefiles in the folders listed in the next step are the files which CAN be overridden by the use of templates. In the previous version it was advised to just overide the default template files, but I advise against it. It may mean less work now, but in a future upgrade of your Zen Cart it complicates updates.<br>
+      <li>Before we proceed there are a couple of things to note. The files in the '2_Required_Core_Edits' folder are of two types. The first type of file CANNOT be over-ridden by the use of templates, the second type is of course the opposite and CAN be overridden by the use of Zen-Cart templates. You can read more about Zen-Cart templates on the Zen-Cart website. The files in the folders listed in the next step are the files which CAN be overridden by the use of templates. In the previous version it was advised to just override the default template files, but I advise against it. It may mean less work now, but in a future upgrade of your Zen Cart it complicates updates.<br>
         It is also possible your custom template already contains files in the mentioned folders, which would mean the old method is useless.
         <br />
         <br />
       </li>
-      <li>The next folders contain files that have to replace the existing zencart files by the use of the templates. Rename the following folders to match your template folder name.<strong> You need to do this for every template installed !!</strong> The files in these folders <strong>may</strong> need merging with existing files in your template.<br />
+      <li>The next folders contain files that have to replace the existing Zen Cart files by the use of the templates. Rename the following folders to match your template folder name.<strong> You need to do this for every template installed !!</strong> The files in these folders <strong>may</strong> need merging with existing files in your template.<br />
         <ul>
           <li><strong>includes/modules/YOUR_TEMPLATE</strong></li>
           <li><strong>includes/modules/sideboxes/YOUR_TEMPLATE</strong></li>
@@ -110,10 +110,10 @@
         </ul>
       In the next folder there also already may be files present<br />
         <ul>
-          <li><strong>includes/init_includes/overides</strong></li>
+          <li><strong>includes/init_includes/overrides</strong></li>
         </ul>
         </strong><br />
-      </li>
+</li>
       <li>Upload and MERGE where needed the entire contents of the <strong>2_Required_Core_Edits</strong> folder, includes folder and the admin folder to your server, again keeping the file structure intact.
         <br />
         <ul>
@@ -179,18 +179,18 @@ These folders should be:
           <li>Do not use a template for two sites, otherwise, you will be obliged to have the same language files too (same shops' name and same sideboxes position)<br />
           <br /></li>
           <li>In the includes/templates/[YOUR_TEMPLATE]/template_info.php, change the template_name to the name of your site that uses the template:
-              <pre name="code" class="php">$template_name = 'mysite';</pre>
+              <pre name="code" class="php:nogutter">$template_name = 'mysite';</pre>
           </li>
           <li>So, if your sites are called www.site1.com and www.site2.net Then your should rename your template to site1 and site2.<br />The file includes/templates/site1/template_info.php should have the line:
-            <pre name="code" class="php">$template_name = 'site1';</pre>
+            <pre name="code" class="php:nogutter">$template_name = 'site1';</pre>
           <br />The file includes/templates/site2/template_info.php should have the line:
-            <pre name="code" class="php">$template_name = 'site1';</pre>
+            <pre name="code" class="php:nogutter">$template_name = 'site1';</pre>
           <br />This will help you later in the admin section; the template selector is now only use for choose the site for which you want to change the sidebox setting.<br /><br />
           </li>
         </ul>
       <li>Create the configuration files of your sites
         <p>Add this line at the beginning of your "includes/configure.php":
-        <pre name="code" class="php">include_once('includes/config_sites/sites_switch.php');</pre></p>
+        <pre name="code" class="php:nogutter">include_once('includes/config_sites/sites_switch.php');</pre></p>
       </li>
     </ol>
     <p>Multi Site is now installed and ready to use!</p>
@@ -198,7 +198,7 @@ These folders should be:
   </div>
   <h2><a name="upgrade" id="upgrade"></a>Upgrade <span style="color: #F00;">( Do a fresh installation)</span></h2>
   <div id="contentDescription" >
-  <p><strong>Upgrading from previous versions is not supported</strong> Please do a fresh instaltion</p>
+  <p><strong>Upgrading from previous versions is not supported</strong> Please do a fresh installation</p>
   </div>
   <h2><a name="configuration" id="configuration"></a>Configuration</h2>
   <div id="contentDescription">
@@ -206,42 +206,55 @@ These folders should be:
     <li>How to change the configuration for a specific shop?
       <p>The Zen-cart configuration is contained in the database and declared in constants at runtime. The configuration in the admin section stands for the "default configuration". You can override this configuration by defining the constants of the setting that you want to change directly in the config file related to one of your site (folder "includes/config_sites")</p>
       <p>You now have to create a config file for each one of your sites! The name of the file has to be: "www.site1.com_config.php" (for the site targeted by the domain name www.site1.com). This file "www.site1.com_config.php" has to contain:</p>
-      <pre name="code" class="php">&lt;?php
+      <pre name="code" class="php:nogutter">&lt;?php
 $template_dir = "site1";
 define('SITE_NAME','site1');
 ?&gt;</pre>
       <p>$template_dir is the template that you want to use for this site SITE_NAME is the name of your site (use for the category filter and for the order page in admin; column site).</p>
-      <p>You can add constants for overriding of the default configuration from the database or from the configure.php, the following lines are only exemples:</p>
+      <p>You can add constants for overriding of the default configuration from the database or from the configure.php, the following lines are only examples:</p>
       <p>//Do not display the categories at the main page for this site:</p>
-      <pre name="code" class="php">define('SHOW_CATEGORIES_ALWAYS','0');</pre>
+      <pre name="code" class="php:nogutter">define('SHOW_CATEGORIES_ALWAYS','0');</pre>
       <p>//Display the categories of ID 5 as the main category of the website:</p>
-      <pre name="code" class="php">define('CATEGORIES_START_MAIN','5');</pre>
+      <pre name="code" class="php:nogutter">define('CATEGORIES_START_MAIN','5');</pre>
       <p>//Change the Contact us email address:</p>
-      <pre name="code" class="php">define('STORE_OWNER_EMAIL_ADDRESS','an_email@address.com')</pre>
+      <pre name="code" class="php:nogutter">define('STORE_OWNER_EMAIL_ADDRESS','an_email@address.com')</pre>
       <p>//Enable the SSL only for this site:</p>
-      <pre name="code" class="php">define('ENABLE_SSL', 'true'); //assuming as 'false' in configure.php</pre>
-      <p>Remember that the code above is only here as exemple and do not always need to be use.</p>
+      <pre name="code" class="php:nogutter">define('ENABLE_SSL', 'true'); //assuming as 'false' in configure.php</pre>
+      <p>Remember that the code above is only here as example and do not always need to be use.</p>
       <p>If you don't know what is the name of the constants of a configuration setting, you can find it by clicking in your admin on Tools => Multisite Tools. This brings up the Multisite page. Here you click on the link "Display Configuration for a new site". Now all you constants are shown. You can select and copy them to the new config file </p>
     </li>
     <li>Category Filter
-      <p>The MultiSite module works by filtering the categories with the function cat_filter. It only displays the categories that have the name of the site (constant SITE_NAME) in html comment in the categories descriptions. Therefore, you need to add this description to EVERY categories description that have to be display in a shop. Sub categories Included!</p>
-      <p>Example of html comment:</p>
-      <pre name="code" class="html"><!--site1-site2-site3--> Description of a category that will be displayed in site1, site2 and site3.</pre>
+      <p>The MultiSite module works by filtering the categories with the function cat_filter. It only displays the categories that have the name of the site (constant SITE_NAME) in HTML comment in the categories descriptions. Therefore, you need to add this description to EVERY categories description that have to be display in a shop. Sub categories Included!</p>
+      <p>Example of HTML comment:</p>
+      <pre name="code" class="html:nogutter"><!--site1-site2-site3--> Description of a category that will be displayed in site1, site2 and site3.</pre>
       <p>This comment will allow this category for the shops site1 site2 and site3. the site names HAVE to be separated by "-".<br />
-If you have Lots of categories, it may be quicker to add the categories trough the Multisite tool. Go to Tools =&gt; Multisite Tools, and click &quot;Display the relations Categories/Sites&quot;</p>
-      <p>once you have put your html comments in your categories, they should appear on the front end of your shop. If a category has no html comment, it won't be displayed in any sites.</p>
+If you have Lots of categories, it may be quicker to add the categories trough the Multisite tool. Go to Tools =&gt; Multisite Tools, and click &quot;Display the relations Categories/Sites&quot;</p><a href="Multisite_Category_Configuration_ScreenShot_01.jpg" target="new" style="text-align:center"><img src="Multisite_Category_Configuration_ScreenShot_01.jpg" width="300" height="230" /><br />Click to enlarge</a>
+      <p>once you have put your HTML comments in your categories, they should appear on the front end of your shop. If a category has no HTML comment, it won't be displayed in any sites.</p>
+    </li>
+    <li>Site Links
+      <p>If you want to allow the shoppers to have a cross-sites cart (orders products from different websites in the same cart), You have to display the side-box called "site_links.php" and you have to add the sites that you want to be link by editing the file "includes\modules\sideboxes\site_links.php".</p>
+      <p>In this file, you have to add as many add_site_link(...); as you want of site links.</p>
+      <p>Example:</p>
+      <pre name="code" class="php:nogutter">add_site_link('Shop Site1','http://www.site1.com');
+add_site_link('Shop Site2','http://www.site2.com');</pre>
+      <p>This works too:</p>
+      <pre name="code" class="php:nogutter">add_site_link('www.site1.com');
+add_site_link('www.site2.com');</pre>
+      <p>PS: these shops Should be Your multi-sites. You can also add some other sites there but the cross-site cart won't work (and so might confused the shoppers ...)<p>
+      <pre name="code" class="php:nogutter">add_site_link('Zen Cart','http://www.zen-cart.com',false);</pre>
+      <p>By adding false as third parameter (false), it won't add the zenid to the link. It can be use either for a shop in the same domain (cookie will work for it) or an external link (cross-site cart won't work anyway....)</p>
     </li>
   </ol>
   </div>
   <h2><a name="version_history" id="version_history"></a>Version History</h2>
   <div id="contentDescription">
-  	<p>Version 1.0 Current- Release Date: 2012-xx-xx</p>
+  	<p>Version 1.0 Current- Release Date: 2013-01-21 by <a href="http://zen4all.nl">Design75</a></p>
     <ul>
-    <li>Removed []</li>
-    <li>modified [includes/classes/]
-      <ul>
-        <li>some text</li></ul></li><li>
-    </li>
+    <li>Updated most files to contain the code of Zen Cart 1.5.1</li>
+    <li>Added the admin module registration for Zen Cart 1.5.x</li>
+    <li>The module is now multilingual on the admin side as well as the front-end</li>
+    <li>The site-link side-box has its own tpl file</li>
+    <li>Added SyntaxHightlighter 1.5.1 to multisite.php for easier reading and copying code</li>
     </ul>
     <p>Version 0.4 -  Release Date: 2007-08-07</p>
     <ul>
@@ -250,10 +263,20 @@ If you have Lots of categories, it may be quicker to add the categories trough t
   </div>
   <h2><a name="faqs" id="faqs"></a>FAQs</h2>
   <div id="contentDescription">
-    <p>&nbsp;</p>
+    <p>Maybe this section will be used in a later release</p>
   </div>
   <h2><a name="support" id="support"></a>Support</h2>
   <div id="contentDescription">
     <p>You will find the official support thread at the link below. Please feel free to post any comments or questions there.</p><a href="http://www.zen-cart.com/showthread.php?63997-MultiSite-Module-Support-Thread">Support thread</a>
+  </div>
+  <h2><a name="donations" id="donations"></a>Donations</h2>
+  <p>Of course this module is presented to you for free, but you can always buy me a cup of coffee.</p>
+  <div id="contentDescription">
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="DEA76C69CH4CG">
+<input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal — The safer, easier way to pay online.">
+<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
+    </form>
   </div>
 </div>
