@@ -20,13 +20,9 @@ $site_header_status = $db->Execute("select layout_box_name from " . TABLE_LAYOUT
 
   //Syntax:
   //add_header_site_link(DISPLAYED NAME OF THE SITE , URL OF THE SITE);
-    add_header_site_link('Design \'75','http://design75.nl');
-    add_header_site_link('Handgrepen','http://handgreepzoeker.nl');
-    add_header_site_link('Ladegeleiders','http://ladegeleiderzoeker.nl');
-    add_header_site_link('Meubelvoeten','http://meubelvoetzoeker.nl');
-    add_header_site_link('Laden','http://kantenklareladen.nl');
+    add_site_link('Example Shop -- Edit site_links.php...','http://www.example.com');
 // only show if links are active
-  if (($show_site_links_header == true) & (sizeof($site_links) > 0)) {
+  if (($show_site_links_header == true) && (sizeof($site_links) > 0)) {
     require($template->get_template_dir('tpl_site_links_header.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes') . '/tpl_site_links_header.php');
 
     $title =  BOX_HEADING_SITE_LINKS;
