@@ -6,7 +6,8 @@
  */
 
 // test if box should display
-
+  $show_site_links= true;
+  
   unset($site_links);
 
 // test if links should display
@@ -15,8 +16,9 @@
   //add_site_link(DISPLAYED NAME OF THE SITE , URL OF THE SITE);
     add_site_link('Example Shop -- Edit site_links.php...','http://www.example.com');
 
+
 // only show if links are active
-  if (sizeof($site_links) > 0) {
+  if (($show_site_links) & (sizeof($site_links) > 0)) {
     require($template->get_template_dir('tpl_site_links.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes') . '/tpl_site_links.php');
 
     $title =  BOX_HEADING_SITE_LINKS;
