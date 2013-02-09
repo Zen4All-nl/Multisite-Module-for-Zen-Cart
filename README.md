@@ -1,5 +1,5 @@
 <div id="contentWrapper">
-  <h1>Multi Site Module v1.0 Alpha for ZC 1.5.1 Documentation</h1>
+  <h1>Multi Site Module v1.0.1 Beta for ZC 1.5.1 Documentation</h1>
   <div id="contentMenu">
     <ul>
       <li><a href="#introduction">Introduction</a></li>
@@ -20,13 +20,10 @@
   </div>
   <h2><a name="whats_new" id="whats_new"></a>What's New</h2>
   <div id="contentDescription">
-    <p>Version 1.0 - Release Date: 2013-01-21</p>
+    <p>Version 1.0.1 - Release Date: 2013-02-09</p>
     <ul>
-    <li>Updated most files to contain the code of Zen Cart 1.5.1</li>
-    <li>Added the admin module registration for Zen Cart 1.5.x</li>
-    <li>The module is now multilingual on the admin side as well as the front-end</li>
-    <li>The site-link side-box has its own tpl file</li>
-    <li>Added SyntaxHightlighter 1.5.1 to multisite.php for easier reading and copying code</li>
+    <li>Updated site links sodebox to use the on/off switch properly</li>
+    <li>Added a header site link side box. This box can be placed any where you like and displays a horizontal bar with the site links.</li>
     </ul>
   </div>
   <h2><a name="installation" id="installation"></a>Installation</h2>
@@ -240,15 +237,24 @@ add_site_link('Shop Site2','http://www.site2.com');</pre>
       <p>This works too:</p>
       <pre name="code" class="php:nogutter">add_site_link('www.site1.com');
 add_site_link('www.site2.com');</pre>
-      <p>PS: these shops Should be Your multi-sites. You can also add some other sites there but the cross-site cart won't work (and so might confused the shoppers ...)<p>
+      <p>PS: these shops Should be Your multi-sites. You can also add some other sites there but the cross-site cart won't work (and so might confused the shoppers ...)</p>
       <pre name="code" class="php:nogutter">add_site_link('Zen Cart','http://www.zen-cart.com',false);</pre>
       <p>By adding false as third parameter (false), it won't add the zenid to the link. It can be use either for a shop in the same domain (cookie will work for it) or an external link (cross-site cart won't work anyway....)</p>
+      <p>For the site links header sidebox, add the following code to your include/templates/YOUR_TEMPLATE/common/tpl_header.php file</p>
+      <pre name="code" class="php:nogutter">&lt;!-- bof header Site links - Multi site module--&gt;
+      &lt;?php require(DIR_WS_MODULES . 'sideboxes/site_links_header.php');?&gt;
+&lt;!-- bof header Site links - Multi site module--&gt;</pre>
     </li>
   </ol>
   </div>
   <h2><a name="version_history" id="version_history"></a>Version History</h2>
   <div id="contentDescription">
-  	<p>Version 1.0 Current- Release Date: 2013-01-21 by <a href="http://zen4all.nl">Design75</a></p>
+  <p>Version 1.0.1 Current- Release Date: 2013-02-09 by <a href="http://zen4all.nl">Design75</a></p>
+    <ul>
+    <li>Updated site links sodebox to use the on/off switch properly</li>
+    <li>Added a header site link side box. This box can be placed any where you like and displays a horizontal bar with the site links.</li>
+    </ul>
+  <p>Version 1.0 Current- Release Date: 2013-01-21 by <a href="http://zen4all.nl">Design75</a></p>
     <ul>
     <li>Updated most files to contain the code of Zen Cart 1.5.1</li>
     <li>Added the admin module registration for Zen Cart 1.5.x</li>
@@ -256,7 +262,7 @@ add_site_link('www.site2.com');</pre>
     <li>The site-link side-box has its own tpl file</li>
     <li>Added SyntaxHightlighter 1.5.1 to multisite.php for easier reading and copying code</li>
     </ul>
-    <p>Version 0.4 -  Release Date: 2007-08-07</p>
+  <p>Version 0.4 -  Release Date: 2007-08-07</p>
     <ul>
       <li>Initial release</li>
     </ul>
