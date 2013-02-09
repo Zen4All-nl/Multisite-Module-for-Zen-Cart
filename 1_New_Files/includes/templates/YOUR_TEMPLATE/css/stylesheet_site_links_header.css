@@ -1,0 +1,23 @@
+.nav_list li{
+	display: inline;
+	list-style-type: none;
+	margin: 0 10px 0 10px;
+}
+#Content {
+	margin: 0 auto;
+
+	width: 980px;
+	display: block;
+	background: lime;
+	color: #fff;
+	height: 20px;
+}
+.nav_list li a {
+	color: #fff;
+	font-size: 14px;
+}
+.nav_list li a:hover {
+	color: #fff;
+	background-color: green;
+	height: 20px;
+}
