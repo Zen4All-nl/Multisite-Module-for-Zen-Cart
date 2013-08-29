@@ -57,7 +57,8 @@
     $oID = zen_db_prepare_input(trim($_GET['oID']));
   }
   if ($oID) {
-    $orders = $db->Execute("select orders_id from " . TABLE_ORDERS . "
+   // next line edited for Multi site
+    $orders = $db->Execute("select orders_id, order_site from " . TABLE_ORDERS . "
                               where orders_id = '" . (int)$oID . "'");
     $order_exists = true;
     if ($orders->RecordCount() <= 0) {
@@ -773,6 +774,9 @@ function couponpopupWindow(url) {
               $disp_order = "c.customers_id DESC";
           }
 ?>
+                <?php // BOF Multi site ?>
+                <td class="dataTableHeadingContent" align="center"><?php echo TABLE_HEADING_SITE; ?></td>
+                <?php // EOF Multi site ?>
                 <td class="dataTableHeadingContent" align="center"><?php echo TABLE_HEADING_ORDERS_ID; ?></td>
                 <td class="dataTableHeadingContent" align="left" width="50"><?php echo TABLE_HEADING_PAYMENT_METHOD; ?></td>
                 <td class="dataTableHeadingContent"><?php echo TABLE_HEADING_CUSTOMERS; ?></td>
@@ -904,6 +908,9 @@ if (($_GET['page'] == '' or $_GET['page'] <= 1) and $_GET['oID'] != '') {
       }
       $show_payment_type = $orders->fields['payment_module_code'] . '<br />' . $orders->fields['shipping_module_code'];
 ?>
+                <?php // BOF Multi site ?>
+                <td class="dataTableContent" align="left"><?php echo $orders->fields['order_site']; ?></td>
+                <?php // EOF Multi site ?>
                 <td class="dataTableContent" align="right"><?php echo $show_difference . $orders->fields['orders_id']; ?></td>
                 <td class="dataTableContent" align="left" width="50"><?php echo $show_payment_type; ?></td>
                 <td class="dataTableContent"><?php echo '<a href="' . zen_href_link(FILENAME_CUSTOMERS, 'cID=' . $orders->fields['customers_id'], 'NONSSL') . '">' . zen_image(DIR_WS_ICONS . 'preview.gif', ICON_PREVIEW . ' ' . TABLE_HEADING_CUSTOMERS) . '</a>&nbsp;' . $orders->fields['customers_name'] . ($orders->fields['customers_company'] != '' ? '<br />' . $orders->fields['customers_company'] : ''); ?></td>
