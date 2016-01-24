@@ -35,6 +35,7 @@ class category_tree extends base {
                              where c.parent_id = ".CATEGORIES_ROOT."
                              and c.categories_id = cd.categories_id
                              and cd.language_id='" . (int)$_SESSION['languages_id'] . "'
+                             AND cd.categories_description LIKE '%-" . SITE_NAME . "-%'
                              and c.categories_status= 1
                              order by sort_order, cd.categories_name";
     } else {
@@ -44,11 +45,12 @@ class category_tree extends base {
                              and ptc.category_id = cd.categories_id
                              and ptc.product_type_id = " . $master_type . "
                              and c.categories_id = ptc.category_id
+                             AND cd.categories_description LIKE '%-" . SITE_NAME . "-%'
                              and cd.language_id=" . (int)$_SESSION['languages_id'] ."
                              and c.categories_status= 1
                              order by sort_order, cd.categories_name";
     }
-    $categories = $db->Execute(cat_filter($categories_query), '', true, 150);
+    $categories = $db->Execute($categories_query, '', true, 150);
 // eof Multi site
     while (!$categories->EOF)  {
       $this->tree[$categories->fields['categories_id']] = array('name' => $categories->fields['categories_name'],
@@ -81,6 +83,7 @@ class category_tree extends base {
                                where c.parent_id = " . (int)$value . "
                                and c.categories_id = cd.categories_id
                                and cd.language_id=" . (int)$_SESSION['languages_id'] . "
+                               AND cd.categories_description LIKE '%-" . SITE_NAME . "-%'
                                and c.categories_status= 1
                                order by sort_order, cd.categories_name";
         } else {
@@ -101,13 +104,14 @@ class category_tree extends base {
                              and ptc.product_type_id = " . $master_type . "
                              and c.categories_id = ptc.category_id
                              and cd.language_id=" . (int)$_SESSION['languages_id'] ."
+                             AND cd.categories_description LIKE '%-" . SITE_NAME . "-%'
                              and c.categories_status= 1
                              order by sort_order, cd.categories_name";
 
         }
 
 // bof Multi site
-        $rows = $db->Execute(cat_filter($categories_query));
+        $rows = $db->Execute($categories_query);
 // eof Multi site
 
         if ($rows->RecordCount()>0) {
