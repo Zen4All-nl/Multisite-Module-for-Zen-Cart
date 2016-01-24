@@ -1,2 +1,2 @@
 <?php
-  define('FILENAME_MULTISITE', 'multisite.php');
+  define('FILENAME_MULTISITE', 'multisite');
