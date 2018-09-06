@@ -35,7 +35,7 @@ function cat_filter($sql) { // only allow selected products/categories
               FROM " . TABLE_CATEGORIES . " c
               INNER JOIN " . TABLE_CATEGORIES_DESCRIPTION . " cd
               ON (c.categories_id = cd.categories_id
-                AND cd.language_id = " . $_SESSION['languages_id'] . "
+                AND cd.language_id = " . (int)$_SESSION['languages_id'] . "
                 AND cd.categories_description LIKE '%-" . SITE_NAME . "-%')
               WHERE categories_status = 1
               LIMIT 1";
@@ -48,7 +48,7 @@ function cat_filter($sql) { // only allow selected products/categories
               FROM " . TABLE_FEATURED . " f
               INNER JOIN " . TABLE_PRODUCTS . " p ON (f.products_id = p.products_id)
               INNER JOIN " . TABLE_CATEGORIES_DESCRIPTION . " cd ON (p.master_categories_id = cd.categories_id
-                AND cd.language_id = " . $_SESSION['languages_id'] . "
+                AND cd.language_id = " . (int)$_SESSION['languages_id'] . "
                 AND cd.categories_description LIKE '%-" . SITE_NAME . "-%')
               WHERE status = 1
               LIMIT 1";
@@ -61,7 +61,7 @@ function cat_filter($sql) { // only allow selected products/categories
               FROM " . TABLE_SPECIALS . " s
               INNER JOIN " . TABLE_PRODUCTS . " p ON (s.products_id = p.products_id)
               INNER JOIN " . TABLE_CATEGORIES_DESCRIPTION . " cd ON (p.master_categories_id = cd.categories_id
-                AND cd.language_id = " . $_SESSION['languages_id'] . "
+                AND cd.language_id = " . (int)$_SESSION['languages_id'] . "
                 AND cd.categories_description LIKE '%-" . SITE_NAME . "-%')
               WHERE status=1
               LIMIT 1";
@@ -78,7 +78,7 @@ function cat_filter($sql) { // only allow selected products/categories
         }
         $sql = substr($sql, 0, $add_pos) .
                 " INNER JOIN " . TABLE_CATEGORIES_DESCRIPTION . " cd ON (c.categories_id = cd.categories_id
-                    AND cd.language_id = " . $_SESSION['languages_id'] . "
+                    AND cd.language_id = " . (int)$_SESSION['languages_id'] . "
                     AND cd.categories_description LIKE '%-" . SITE_NAME . "-%') " . substr($sql, $add_pos);
       }
     }
@@ -88,7 +88,7 @@ function cat_filter($sql) { // only allow selected products/categories
                       "and p.products_id = p2c.products_id limit 1$/", $sql)) {
         $sql = str_replace(TABLE_PRODUCTS_TO_CATEGORIES . " p2c ", TABLE_PRODUCTS_TO_CATEGORIES . " p2c
           INNER JOIN " . TABLE_CATEGORIES_DESCRIPTION . " cd ON (p2c.categories_id = cd.categories_id
-            AND cd.language_id = " . $_SESSION['languages_id'] . "
+            AND cd.language_id = " . (int)$_SESSION['languages_id'] . "
             AND cd.categories_description LIKE '%-" . SITE_NAME . "-%')
           INNER JOIN " . TABLE_CATEGORIES . " as c ON (cd.categories_id = c.categories_id
             AND c.categories_status = 1)", $sql);
@@ -103,13 +103,13 @@ function cat_filter($sql) { // only allow selected products/categories
         }
         $sql = substr($sql, 0, $add_pos) .
                 " INNER JOIN " . TABLE_CATEGORIES_DESCRIPTION . " cd ON (p.master_categories_id = cd.categories_id
-                    AND cd.language_id = " . $_SESSION['languages_id'] . "
+                    AND cd.language_id = " . (int)$_SESSION['languages_id'] . "
                     AND cd.categories_description LIKE '%-" . SITE_NAME . "-%') " . substr($sql, $add_pos);
       }
     } else if ($fix == 2) {
       $sql = substr($sql, 0, $str_pos_where + 6) .
               " cd.categories_description LIKE '%-" . SITE_NAME . "-%'
-                AND cd.language_id = " . $_SESSION['languages_id'] . "
+                AND cd.language_id = " . (int)$_SESSION['languages_id'] . "
                 AND " . substr($sql, $str_pos_where + 6);
     }
   }

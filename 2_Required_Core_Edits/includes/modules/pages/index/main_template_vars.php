@@ -3,10 +3,10 @@
  * index main_template_vars.php
  *
  * @package page
- * @copyright Copyright 2003-2011 Zen Cart Development Team
+ * @copyright Copyright 2003-2018 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: main_template_vars.php 18695 2011-05-04 05:24:19Z drbyte $
+ * @version $Id: Author: DrByte  Modified in v1.5.6 $
  */
 
 // This should be first line of the script:
@@ -149,7 +149,6 @@ if ($category_depth == 'nested')
   'PRODUCT_LIST_BUY_NOW' => PRODUCT_LIST_BUY_NOW);
   */
   asort($define_list);
-  reset($define_list);
   $column_list = array();
   foreach ($define_list as $key => $value)
   {
@@ -203,8 +202,9 @@ if ($category_depth == 'nested')
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 $current_categories_description = "";
+$current_categories_name = "";
 // categories_description
-$sql = "SELECT categories_description
+$sql = "SELECT categories_description, categories_name
         FROM " . TABLE_CATEGORIES_DESCRIPTION . "
         WHERE categories_id= :categoriesID
         AND language_id = :languagesID";
@@ -217,10 +217,27 @@ if ($categories_description_lookup->RecordCount() > 0) {
 // bof Multi site - Remove html comment from categories_description
   $current_categories_description = preg_replace('/<!--(.|\s)*?-->/', '', $current_categories_description);
 // eof Multi site
+  $current_categories_name = $categories_description_lookup->fields['categories_name'];
 }
+
+if ($current_categories_name == '' && isset($_GET['manufacturers_id'])) {
+  $result = $db->Execute( "SELECT * FROM " . TABLE_MANUFACTURERS . "
+                           WHERE manufacturers_id = " . (int)$_GET['manufacturers_id'] . " LIMIT 1");
+  if (!$result->EOF) $current_categories_name = $result->fields['manufacturers_name'];
+}
+if ($current_categories_name == '' && isset($_GET['record_company_id'])) {
+  $result = $db->Execute( "SELECT * FROM " . TABLE_RECORD_COMPANY . "
+                           WHERE record_company_id = " . (int)$_GET['record_company_id'] . " LIMIT 1");
+  if (!$result->EOF) $current_categories_name = $result->fields['record_company_name'];
+}
+if ($current_categories_name == '' && isset($_GET['music_genre_id'])) {
+  $result = $db->Execute( "SELECT * FROM " . TABLE_MUSIC_GENRE . "
+                           WHERE music_genre_id = " . (int)$_GET['music_genre_id'] . " LIMIT 1");
+  if (!$result->EOF) $current_categories_name = $result->fields['music_genre_name'];
+}
+$zco_notifier->notify('NOTIFY_HEADER_INDEX_MAIN_TEMPLATE_VARS_PAGE_BODY', NULL, $tpl_page_body, $current_categories_name);
 
 require($template->get_template_dir($tpl_page_body, DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . $tpl_page_body);
 
 // This should be last line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_END_INDEX_MAIN_TEMPLATE_VARS');
-?>
+$zco_notifier->notify('NOTIFY_HEADER_END_INDEX_MAIN_TEMPLATE_VARS', NULL, $current_categories_description);

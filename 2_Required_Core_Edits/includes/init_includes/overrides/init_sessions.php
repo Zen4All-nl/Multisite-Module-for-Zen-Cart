@@ -4,10 +4,10 @@
  * see {@link  http://www.zen-cart.com/wiki/index.php/Developers_API_Tutorials#InitSystem wikitutorials} for more details.
  *
  * @package initSystem
- * @copyright Copyright 2003-2011 Zen Cart Development Team
+ * @copyright Copyright 2003-2016 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: init_sessions.php 18695 2011-05-04 05:24:19Z drbyte $
+ * @version $Id: Author: DrByte  Sun Jan 10 02:53:32 2016 -0500 Modified in v1.5.5 $
  */
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
@@ -38,13 +38,11 @@ $path = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
 if (defined('SESSION_USE_ROOT_COOKIE_PATH') && SESSION_USE_ROOT_COOKIE_PATH  == 'True') $path = '/';
 $path = (defined('CUSTOM_COOKIE_PATH')) ? CUSTOM_COOKIE_PATH : $path;
 $domainPrefix = (!defined('SESSION_ADD_PERIOD_PREFIX') || SESSION_ADD_PERIOD_PREFIX == 'True') ? '.' : '';
+if (filter_var($cookieDomain, FILTER_VALIDATE_IP)) $domainPrefix = '';
 $secureFlag = ((ENABLE_SSL == 'true' && substr(HTTP_SERVER, 0, 6) == 'https:' && substr(HTTPS_SERVER, 0, 6) == 'https:') || (ENABLE_SSL == 'false' && substr(HTTP_SERVER, 0, 6) == 'https:')) ? TRUE : FALSE;
 
-if (PHP_VERSION >= '5.2.0') {
-  session_set_cookie_params(0, $path, (zen_not_null($cookieDomain) ? $domainPrefix . $cookieDomain : ''), $secureFlag, TRUE);
-} else {
-  session_set_cookie_params(0, $path, (zen_not_null($cookieDomain) ? $domainPrefix . $cookieDomain : ''), $secureFlag);
-}
+session_set_cookie_params(0, $path, (zen_not_null($cookieDomain) ? $domainPrefix . $cookieDomain : ''), $secureFlag, TRUE);
+
 /**
  * set the session ID if it exists
  */
@@ -62,18 +60,17 @@ elseif(isset($_GET[session_name()])) {
 }
 //eof Multi site
 /**
- * need to tidy up $_SERVER['REMOTE_ADDR'] here beofre we use it any where else
- * one problem we don't address here is if $_SERVER['REMOTE_ADDRESS'] is not set to anything at all
+ * Sanitize the IP address, and resolve any proxies.
  */
-$ipAddressArray = explode(',', $_SERVER['REMOTE_ADDR']);
-$ipAddress = (sizeof($ipAddressArray) > 0) ? $ipAddressArray[0] : '';
+$ipAddressArray = explode(',', zen_get_ip_address());
+$ipAddress = (sizeof($ipAddressArray) > 0) ? $ipAddressArray[0] : '.';
 $_SERVER['REMOTE_ADDR'] = $ipAddress;
 /**
  * start the session
  */
 $session_started = false;
 if (SESSION_FORCE_COOKIE_USE == 'True') {
-  zen_setcookie('cookie_test', 'please_accept_for_session', time()+60*60*24*30, '/', (zen_not_null($current_domain) ? $current_domain : ''));
+  setcookie('cookie_test', 'please_accept_for_session', time()+60*60*24*30, $path, (zen_not_null($cookieDomain) ? $domainPrefix . $cookieDomain : ''), $secureFlag);
 
   if (isset($_COOKIE['cookie_test'])) {
     zen_session_start();
@@ -143,7 +140,7 @@ if (SESSION_CHECK_USER_AGENT == 'True') {
   }
   if ($_SESSION['SESSION_USER_AGENT'] != $http_user_agent) {
     zen_session_destroy();
-    zen_redirect(zen_href_link(FILENAME_LOGIN));
+    zen_redirect(zen_href_link(FILENAME_LOGIN, '', 'SSL'));
   }
 }
 /**
@@ -156,6 +153,6 @@ if (SESSION_CHECK_IP_ADDRESS == 'True') {
   }
   if ($_SESSION['SESSION_IP_ADDRESS'] != $ip_address) {
     zen_session_destroy();
-    zen_redirect(zen_href_link(FILENAME_LOGIN));
+    zen_redirect(zen_href_link(FILENAME_LOGIN, '', 'SSL'));
   }
 }

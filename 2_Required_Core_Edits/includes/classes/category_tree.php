@@ -3,10 +3,10 @@
  * category_tree Class.
  *
  * @package classes
- * @copyright Copyright 2003-2006 Zen Cart Development Team
+ * @copyright Copyright 2003-2018 Zen Cart Development Team
  * @copyright Portions Copyright 2003 osCommerce
  * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: category_tree.php 3041 2006-02-15 21:56:45Z wilt $
+ * @version $Id: category_tree.php  Modified in v1.5.6 $
  */
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
@@ -53,12 +53,14 @@ class category_tree extends base {
     $categories = $db->Execute($categories_query, '', true, 150);
 // eof Multi site
     while (!$categories->EOF)  {
-      $this->tree[$categories->fields['categories_id']] = array('name' => $categories->fields['categories_name'],
-      'parent' => $categories->fields['parent_id'],
-      'level' => 0,
-      'path' => $categories->fields['categories_id'],
-      'image' => $categories->fields['categories_image'],
-      'next_id' => false);
+      $this->tree[$categories->fields['categories_id']] = array(
+              'name' => $categories->fields['categories_name'],
+              'parent' => $categories->fields['parent_id'],
+              'level' => 0,
+              'path' => $categories->fields['categories_id'],
+              'image' => $categories->fields['categories_image'],
+              'next_id' => false,
+              );
 
       if (isset($parent_id)) {
         $this->tree[$parent_id]['next_id'] = $categories->fields['categories_id'];
@@ -73,8 +75,7 @@ class category_tree extends base {
     }
     if (zen_not_null($cPath)) {
       $new_path = '';
-      reset($cPath_array);
-      while (list($key, $value) = each($cPath_array)) {
+      foreach($cPath_array as $key => $value) {
         unset($parent_id);
         unset($first_id);
         if ($product_type == 'all') {
@@ -107,12 +108,9 @@ class category_tree extends base {
                              AND cd.categories_description LIKE '%-" . SITE_NAME . "-%'
                              and c.categories_status= 1
                              order by sort_order, cd.categories_name";
-
         }
 
-// bof Multi site
         $rows = $db->Execute($categories_query);
-// eof Multi site
 
         if ($rows->RecordCount()>0) {
           $new_path .= $value;
@@ -208,4 +206,3 @@ class category_tree extends base {
     return $this->box_categories_array;
   }
 }
-?>
